@@ -1,14 +1,14 @@
 {
-    "name": "Grostore",
-    "short_name": "Grostore",
+    "name": "ISHOP",
+    "short_name": "ISHOP",
     "start_url": "/",
     "background_color": "#6777ef",
-    "description": "Grostore",
+    "description": "ISHOP",
     "display": "fullscreen",
     "theme_color": "#6eb356",
     "icons": [
         {
-            "src": "pwa.png",
+            "src": "uploads/media/bBc2okWhL27bt509qu1QY5iv7w2UxV9LpaR12sEt.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any maskable"

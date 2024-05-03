@@ -59,7 +59,7 @@
                                         class="form-label">{{ localize('Order Code Prefix') }}</label>
                                     <input type="hidden" name="types[]" value="order_code_prefix">
                                     <input type="text" id="order_code_prefix" name="order_code_prefix"
-                                        class="form-control" placeholder="{{ localize('#Grostore-') }}"
+                                        class="form-control" placeholder="{{ localize('#ISHOP-') }}"
                                         value="{{ getSetting('order_code_prefix') }}">
                                 </div>
                                 <div class="mb-3">
