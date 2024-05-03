@@ -398,7 +398,7 @@ html:not([dir="rtl"]) .toast-close-button {
     text-align: center !important;
   }
   .hero-btns {
-    transform: translate(-14px, -60px) !important;
+    transform: translate(-16px, -50px) !important;
   }
 
   .swiper-wrapper{
@@ -424,9 +424,9 @@ html:not([dir="rtl"]) .toast-close-button {
 }
 
 @media (max-width: 1366.98px) {
-  .hero-btns {
+  /* .hero-btns {
     transform: translate(-14px, -60px) !important;
-  }
+  } */
 }
 
 .img-fluid-sm {

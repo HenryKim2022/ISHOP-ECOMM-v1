@@ -105,9 +105,9 @@
   .gshop-hero {
     padding-top: 6%; /* For SM breakpoint and above my laptop */
   }
-  .hero-btns {
-    transform: translate(-14px, -67px) !important;
-  }
+  /* .hero-btns {
+    transform: translate(-14px, -50px) !important;
+  } */
 
 }
 
