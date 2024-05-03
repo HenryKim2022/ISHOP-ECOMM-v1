@@ -1,4 +1,5 @@
- <!-- Offcanvas -->
+@if (paymentGateway('iyzico'))
+<!-- Offcanvas -->
  <div class="offcanvas offcanvas-end" id="offcanvasIyzico" tabindex="-1">
      <div class="offcanvas-header border-bottom">
          <h5 class="offcanvas-title">{{ localize('Iyzico Configuration') }}</h5>
@@ -52,3 +53,4 @@
          </form>
      </div>
  </div>
+@endif

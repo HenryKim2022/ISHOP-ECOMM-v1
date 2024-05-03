@@ -25,7 +25,7 @@ class SystemSettingsTableSeeder extends Seeder
             array('id' => '5', 'entity' => 'enable_multi_vendor', 'value' => '0', 'created_at' => '2022-12-25 06:00:08', 'updated_at' => '2023-02-18 08:56:54', 'deleted_at' => NULL),
             array('id' => '6', 'entity' => 'default_admin_commission', 'value' => '5', 'created_at' => '2022-12-25 06:00:08', 'updated_at' => '2022-12-25 06:00:08', 'deleted_at' => NULL),
             array('id' => '7', 'entity' => 'vendor_minimum_payout', 'value' => '500', 'created_at' => '2022-12-28 06:34:48', 'updated_at' => '2022-12-28 06:34:48', 'deleted_at' => NULL),
-            array('id' => '8', 'entity' => 'order_code_prefix', 'value' => '#G-Store:', 'created_at' => '2023-02-04 06:48:17', 'updated_at' => '2023-02-19 08:42:24', 'deleted_at' => NULL),
+            array('id' => '8', 'entity' => 'order_code_prefix', 'value' => '#ISHOP:', 'created_at' => '2023-02-04 06:48:17', 'updated_at' => '2023-02-19 08:42:24', 'deleted_at' => NULL),
             array('id' => '9', 'entity' => 'order_code_start', 'value' => '1', 'created_at' => '2023-02-04 06:48:17', 'updated_at' => '2023-02-04 06:51:38', 'deleted_at' => NULL),
             array('id' => '10', 'entity' => 'system_title', 'value' => 'Grostore Online Store', 'created_at' => '2023-02-05 06:48:44', 'updated_at' => '2023-03-07 06:46:14', 'deleted_at' => NULL),
             array('id' => '11', 'entity' => 'title_separator', 'value' => ':', 'created_at' => '2023-02-05 06:48:44', 'updated_at' => '2023-02-05 06:48:44', 'deleted_at' => NULL),

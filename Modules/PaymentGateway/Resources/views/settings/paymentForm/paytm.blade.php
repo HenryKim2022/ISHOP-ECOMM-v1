@@ -1,4 +1,6 @@
- <!-- Offcanvas -->
+
+@if (paymentGateway('paytm'))
+<!-- Offcanvas -->
  <div class="offcanvas offcanvas-end" id="offcanvasPaytm" tabindex="-1">
      <div class="offcanvas-header border-bottom">
          <h5 class="offcanvas-title">{{ localize('PayTm Configuration') }}</h5>
@@ -65,3 +67,4 @@
          </form>
      </div>
  </div>
+@endif

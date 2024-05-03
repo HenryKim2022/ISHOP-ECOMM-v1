@@ -1,4 +1,5 @@
- <!-- Offcanvas -->
+@if (paymentGateway('molile'))
+<!-- Offcanvas -->
  <div class="offcanvas offcanvas-end" id="offcanvasMolile" tabindex="-1">
      <div class="offcanvas-header border-bottom">
          <h5 class="offcanvas-title">{{ localize('Molile Configuration') }}</h5>
@@ -36,3 +37,4 @@
          </form>
      </div>
  </div>
+@endif

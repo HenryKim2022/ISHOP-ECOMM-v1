@@ -1,3 +1,4 @@
+ @if (paymentGateway('flutterwave'))
  <!-- Offcanvas -->
  <div class="offcanvas offcanvas-end" id="offcanvasFlutterwave" tabindex="-1">
      <div class="offcanvas-header border-bottom">
@@ -52,3 +53,4 @@
          </form>
      </div>
  </div>
+@endif

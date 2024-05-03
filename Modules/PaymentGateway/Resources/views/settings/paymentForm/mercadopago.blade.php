@@ -1,4 +1,6 @@
- <!-- Offcanvas -->
+@if (paymentGateway('mercadopago'))
+
+<!-- Offcanvas -->
  <div class="offcanvas offcanvas-end" id="offcanvasMercadopago" tabindex="-1">
      <div class="offcanvas-header border-bottom">
          <h5 class="offcanvas-title">{{ localize('Mercadopago Configuration') }}</h5>
@@ -50,3 +52,4 @@
          </form>
      </div>
  </div>
+@endif

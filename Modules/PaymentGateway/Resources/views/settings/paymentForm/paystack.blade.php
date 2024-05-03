@@ -1,3 +1,4 @@
+@if (paymentGateway('paystack')) 
  <!-- Offcanvas -->
  <div class="offcanvas offcanvas-end" id="offcanvasPaystack" tabindex="-1">
      <div class="offcanvas-header border-bottom">
@@ -61,3 +62,4 @@
          </form>
      </div>
  </div>
+@endif

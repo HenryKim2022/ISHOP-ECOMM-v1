@@ -1,3 +1,4 @@
+ @if (paymentGateway('yookassa'))
  <!-- Offcanvas -->
  <div class="offcanvas offcanvas-end" id="offcanvasYookassa" tabindex="-1">
      <div class="offcanvas-header border-bottom">
@@ -87,3 +88,4 @@
     })
  </script>
  @endsection
+ @endif

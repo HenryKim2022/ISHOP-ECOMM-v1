@@ -8315,7 +8315,7 @@ INSERT INTO `system_settings` (`id`, `entity`, `value`, `created_at`, `updated_a
 (5, 'enable_multi_vendor', '0', '2022-12-24 23:00:08', '2023-02-18 01:56:54', NULL),
 (6, 'default_admin_commission', '5', '2022-12-24 23:00:08', '2022-12-24 23:00:08', NULL),
 (7, 'vendor_minimum_payout', '500', '2022-12-27 23:34:48', '2022-12-27 23:34:48', NULL),
-(8, 'order_code_prefix', '#G-Store:', '2023-02-03 23:48:17', '2023-02-19 01:42:24', NULL),
+(8, 'order_code_prefix', '#ISHOP:', '2023-02-03 23:48:17', '2023-02-19 01:42:24', NULL),
 (9, 'order_code_start', '1', '2023-02-03 23:48:17', '2023-02-03 23:51:38', NULL),
 (10, 'system_title', 'ISHOP Online Store', '2023-02-04 23:48:44', '2024-05-02 10:16:06', NULL),
 (11, 'title_separator', ':', '2023-02-04 23:48:44', '2023-02-04 23:48:44', NULL),
