@@ -392,6 +392,7 @@ html:not([dir="rtl"]) .toast-close-button {
   border-radius: 1020rem;
 }
 
+
 @media (max-width: 500.98px) {
   .text-xxs-center {
     text-align: center !important;
@@ -420,6 +421,12 @@ html:not([dir="rtl"]) .toast-close-button {
     padding-bottom: 11px;
   }
 
+}
+
+@media (max-width: 1366.98px) {
+  .hero-btns {
+    transform: translate(-14px, -60px) !important;
+  }
 }
 
 .img-fluid-sm {
