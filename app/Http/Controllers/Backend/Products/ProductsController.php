@@ -76,7 +76,7 @@ class ProductsController extends Controller
             return view('backend.pages.products.products.category')->with(['categories' => Category::find($theme)]);
         }
 
-        $categories = Category::where('parent_id')
+        $categories = Category::where('parent_id', 0)
             ->orderBy('sorting_order_level', 'desc')
             ->with('childrenCategories', 'themes')
             ->get();
@@ -261,7 +261,8 @@ class ProductsController extends Controller
                     $product_variation              = new ProductVariation;
                     $product_variation->product_id  = $product->id;
                     $product_variation->variation_key        = $variation['variation_key'];
-                    $product_variation->price       = priceToUsd($variation['price']);
+                    // $product_variation->price       = priceToUsd($variation['price']);
+                    $product_variation->price       = $variation['price'];
                     $product_variation->sku         = $variation['sku'];
                     $product_variation->code         = $variation['code'];
                     $product_variation->save();
@@ -286,7 +287,8 @@ class ProductsController extends Controller
                 $variation->product_id  = $product->id;
                 $variation->sku         = $request->sku;
                 $variation->code         = $request->code;
-                $variation->price       = priceToUsd($request->price);
+                // $variation->price       = priceToUsd($request->price);
+                $variation->price       = $request->price;
                 $variation->save();
                 $product_variation_stock                          = new ProductVariationStock;
                 $product_variation_stock->product_variation_id    = $variation->id;
@@ -330,7 +332,7 @@ class ProductsController extends Controller
             return redirect()->route('admin.products.index');
         }
 
-        $categories = Category::where('parent_id')
+        $categories = Category::where('parent_id', 0)
             ->orderBy('sorting_order_level', 'desc')
             ->with('childrenCategories')
             ->get();
@@ -521,7 +523,8 @@ class ProductsController extends Controller
                         $variation->variation_key        = null;
                         $variation->sku                  = $request->sku;
                         $variation->code                  = $request->code;
-                        $variation->price                = priceToUsd($request->price);
+                        // $variation->price                = priceToUsd($request->price);
+                        $variation->price                = $request->price;
                         $variation->save();
 
 
@@ -683,7 +686,8 @@ class ProductsController extends Controller
                         $variation->product_id = $product->id;
                         $variation->sku        = $temporaryProduct->sku;
                         $variation->code       = $temporaryProduct->code;
-                        $variation->price      = priceToUsd($temporaryProduct->price);
+                        // $variation->price      = priceToUsd($temporaryProduct->price);
+                        $variation->price      = $temporaryProduct->price;
                         $variation->save();
 
                         if ($variation) {

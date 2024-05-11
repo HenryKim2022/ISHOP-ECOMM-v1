@@ -7,8 +7,10 @@ use App\Models\CouponUsage;
 use App\Models\EnmartModule;
 use App\Models\Localization;
 use App\Models\MediaManager;
+use Illuminate\Support\Facades\App;
 use Illuminate\Http\Request;
 use App\Models\SystemSetting;
+use Illuminate\Support\Facades\Cache;
 use App\Models\VariationValue;
 use Nwidart\Modules\Facades\Module;
 use Illuminate\Support\Facades\Config;
@@ -19,7 +21,9 @@ use Illuminate\Support\Facades\Schema;
 use League\CommonMark\Normalizer\SlugNormalizer;
 use Illuminate\Support\Facades\Artisan;
 
-
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\File;
 
 if (!function_exists('ddError')) {
     # get error  information

@@ -159,11 +159,25 @@
         <!--page's script-->
 
         <!--for pwa-->
-        <script src="{{ url('/') . '/public/sw.js' }}"></script>
+        {{-- <script src="{{ url('/') . '/public/sw.js' }}"></script>
         <script>
             if (!navigator.serviceWorker?.controller) {
                 navigator.serviceWorker?.register("./public/sw.js").then(function(reg) {
                     // console.log("Service worker has been registered for scope: " + reg.scope);
+                });
+            }
+        </script> --}}
+        <!--for pwa-->
+
+        <!--for pwa-->
+        <script>
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                    navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                        console.log('Service Worker registered with scope: ', registration.scope);
+                    }).catch(function(error) {
+                        console.log('Service Worker registration failed: ', error);
+                    });
                 });
             }
         </script>

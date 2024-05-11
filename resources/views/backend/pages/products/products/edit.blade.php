@@ -287,7 +287,11 @@
                                                 <div class="mb-3">
                                                     <label for="price"
                                                         class="form-label">{{ localize('Price') }}</label>
-                                                    <input type="number" min="0" step="0.0001" id="price"
+                                                    {{-- <input type="number" min="0" step="0.0001" id="price"
+                                                        name="price" placeholder="{{ localize('Product price') }}"
+                                                        class="form-control" value="{{ $price }}"
+                                                        {{ !$product->has_variation ? 'required' : '' }}> --}}
+                                                    <input type="number" min="0" step="1" id="price"
                                                         name="price" placeholder="{{ localize('Product price') }}"
                                                         class="form-control" value="{{ $price }}"
                                                         {{ !$product->has_variation ? 'required' : '' }}>

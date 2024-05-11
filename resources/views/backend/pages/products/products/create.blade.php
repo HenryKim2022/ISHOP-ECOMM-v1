@@ -44,6 +44,7 @@
                                     </select>
                                 </div>
 
+
                                 <div class="mb-4">
                                     <label for="name" class="form-label">{{ localize('Product Name') }}</label>
                                     <input class="form-control" type="text" id="name"
@@ -215,7 +216,10 @@
                                             <div class="mb-3">
                                                 <label for="price" class="form-label">{{ localize('Price') }} <span
                                                     class="text-danger">*</span></label>
-                                                <input type="number" min="0" step="0.0001" id="price"
+                                                {{-- <input type="number" min="0" step="0.0001" id="price"
+                                                    name="price" placeholder="{{ localize('Product price') }}"
+                                                    class="form-control" required> --}}
+                                                <input type="number" min="0" step="1" id="price"
                                                     name="price" placeholder="{{ localize('Product price') }}"
                                                     class="form-control" required>
                                             </div>
