@@ -4,42 +4,79 @@ jQuery(function ($) {
     "use strict";
 
 
+    // $('.searchNav').on('keyup', function () {
+
+    //     var search = $(this).val().toLowerCase();
+
+    //     var result = $('.search-item');
+
+
+    //     $(result).html('');
+
+    //     if (search.length == 0) {
+    //         $('.search-item').addClass('d-none');
+    //         return;
+    //     }
+    //     $('.search-item').removeClass('d-none');
+
+
+    //     var searchResult = $('.searchMenu a').not('.has-arrow').filter(function (index, item) {
+    //         return $(item).text().trim().toLowerCase().indexOf(search) >= 0 ? item : null;
+    //     }).sort();
+
+    //     if (searchResult.length == 0) {
+    //         $(result).append('<li class="text-muted pl-5">No search result found.</li>');
+    //         return;
+    //     }
+
+    //     searchResult.each(function (index, item) {
+    //         var item_url = $(item).attr('href');
+    //         var item_text = $(item).text().replace(/(\d+)/g, '').trim();
+    //         $(result).append(`
+    //         <li>            
+    //           <a href="${item_url}" class="d-block">${item_text}</a>
+    //         </li>
+    //       `);
+    //     });
+
+    // });
     $('.searchNav').on('keyup', function () {
-
         var search = $(this).val().toLowerCase();
-
         var result = $('.search-item');
-
-
+    
         $(result).html('');
-
+    
         if (search.length == 0) {
             $('.search-item').addClass('d-none');
             return;
         }
         $('.search-item').removeClass('d-none');
-
-
+    
         var searchResult = $('.searchMenu a').not('.has-arrow').filter(function (index, item) {
             return $(item).text().trim().toLowerCase().indexOf(search) >= 0 ? item : null;
         }).sort();
-
+    
         if (searchResult.length == 0) {
             $(result).append('<li class="text-muted pl-5">No search result found.</li>');
             return;
         }
-
+    
+        var appendedItems = {}; // Object to store already appended item texts
+    
         searchResult.each(function (index, item) {
             var item_url = $(item).attr('href');
             var item_text = $(item).text().replace(/(\d+)/g, '').trim();
-            $(result).append(`
-            <li>
-            
-              <a href="${item_url}" class="d-block">${item_text}</a>
-            </li>
-          `);
+    
+            // Check if item_text already exists in the appendedItems object
+            if (!appendedItems[item_text]) {
+                appendedItems[item_text] = true; // Set item_text as a property in the appendedItems object
+                $(result).append(`
+                    <li>
+                        <a href="${item_url}" class="d-block">${item_text}</a>
+                    </li>
+                `);
+            }
         });
-
     });
 
 
