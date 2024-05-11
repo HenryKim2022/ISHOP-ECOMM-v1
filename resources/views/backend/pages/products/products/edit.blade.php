@@ -52,13 +52,13 @@
                             <div class="card-body">
                                 <h5 class="mb-4">{{ localize('Basic Information') }}</h5>
 
-                                
+
                                 <div class="mb-4">
                                     @php
                                         $checkThemes = $product->themes()->pluck('theme_id');
                                     @endphp
-                                    <label  class="form-label">{{ localize('Themes') }} <span
-                                            class="text-danger">*</span> </label>
+                                    <label class="form-label">{{ localize('Themes') }} <span class="text-danger">*</span>
+                                    </label>
                                     <select class="form-control select2 themeChange" name="theme_ids[]"
                                         data-placeholder="{{ localize('Select themes') }}" data-toggle="select2" multiple
                                         required>
@@ -73,7 +73,7 @@
 
                                 <div class="mb-4">
                                     <label for="name" class="form-label">{{ localize('Product Name') }} <span
-                                        class="text-danger">*</span></label>
+                                            class="text-danger">*</span></label>
                                     <input class="form-control" type="text" id="name"
                                         placeholder="{{ localize('Type your product name') }}" name="name"
                                         value="{{ $product->collectLocalization('name', $lang_key) }}" required>
@@ -85,7 +85,7 @@
                                 @if (env('DEFAULT_LANGUAGE') == $lang_key)
                                     <div class="mb-4">
                                         <label for="slug" class="form-label">{{ localize('Product Slug') }} <span
-                                            class="text-danger">*</span></label>
+                                                class="text-danger">*</span></label>
                                         <input class="form-control" type="text" id="slug"
                                             placeholder="{{ localize('Type your product name') }}" name="slug"
                                             value="{{ $product->slug }}" required>
@@ -158,17 +158,19 @@
 
                             <div class="mb-4 card">
                                 <div class="card-body">
-                                    <label for="name" class="form-label">{{ localize('Product Youtube Vedio Embeded Code') }}</label>
-                                    <input class="form-control" type="text" id="vedio_link" name="vedio_link" value="{{$product->vedio_link}}">
+                                    <label for="name"
+                                        class="form-label">{{ localize('Product Youtube Vedio Embeded Code') }}</label>
+                                    <input class="form-control" type="text" id="vedio_link" name="vedio_link"
+                                        value="{{ $product->vedio_link }}">
                                 </div>
-                               
+
                             </div>
 
                             <!--product category start-->
                             <div class="card mb-4" id="section-3">
                                 <div class="card-body">
                                     <h5 class="mb-4">{{ localize('Product Categories') }} <span
-                                        class="text-danger">*</span></h5>
+                                            class="text-danger">*</span></h5>
                                     <div class="mb-4">
                                         @php
                                             $product_categories = $product->categories()->pluck('category_id');
@@ -177,7 +179,7 @@
                                             data-placeholder="{{ localize('Select Categories') }}" name="category_ids[]"
                                             required id="appendCategory">
 
-                                           
+
 
                                         </select>
                                     </div>
@@ -247,6 +249,9 @@
                             </div>
                             <!--product brand and unit end-->
 
+
+            
+
                             <!--product price sku and stock start-->
                             <div class="card mb-4" id="section-5">
                                 <div class="card-body">
@@ -266,18 +271,31 @@
                                     <div class="noVariation"
                                         @if ($product->has_variation) style="display:none;" @endif>
                                         @php
-                                        
-                                            $first_variation = $product->variations->first();
-                                            if(!$first_variation && !$product->has_variation) {
-                                                $price = $product->min_price;
-                                                // // if (Session::has('currency_code') && Session::has('local_currency_rate')) {
-                                                //     $price = floatval($price) * floatval(Session::get('local_currency_rate'));
-                                                // // }
 
-                                            }else{
+                                            $first_variation = $product->variations->first();
+                                            if (!$first_variation && !$product->has_variation) {
+                                                $price = $product->min_price;
+                                               
+                                                // CUST ADDED: convert amount equal to local currency
+                                                if (Session::has('currency_code') && Session::has('local_currency_rate')) {
+                                                    $price = floatval($price) / (floatval(env('DEFAULT_CURRENCY_RATE')) || 1);
+                                                    $price = floatval($price) * floatval(Session::get('local_currency_rate'));
+                                                }
+
+                                            } else {
                                                 $price = !$product->has_variation ? $first_variation->price : 0;
+                                                // CUST ADDED: convert amount equal to local currency
+                                                if (Session::has('currency_code') && Session::has('local_currency_rate')) {
+                                                    $price = floatval($price) / (floatval(env('DEFAULT_CURRENCY_RATE')) || 1);
+                                                    $price = floatval($price) * floatval(Session::get('local_currency_rate'));
+                                                }
+
                                             }
-                                            $stock_qty = !$product->has_variation ? ($first_variation->product_variation_stock ? $first_variation->product_variation_stock->stock_qty : 0) : 1;
+                                            $stock_qty = !$product->has_variation
+                                                ? ($first_variation->product_variation_stock
+                                                    ? $first_variation->product_variation_stock->stock_qty
+                                                    : 0)
+                                                : 1;
                                             $sku = !$product->has_variation ? $first_variation->sku : null;
                                             $code = !$product->has_variation ? $first_variation->code : null;
                                         @endphp
@@ -287,15 +305,11 @@
                                                 <div class="mb-3">
                                                     <label for="price"
                                                         class="form-label">{{ localize('Price') }}</label>
-                                                    {{-- <input type="number" min="0" step="0.0001" id="price"
+                                                    <input type="number" min="0" step="0.0001" id="price"
                                                         name="price" placeholder="{{ localize('Product price') }}"
                                                         class="form-control" value="{{ $price }}"
-                                                        {{ !$product->has_variation ? 'required' : '' }}> --}}
-                                                    <input type="number" min="0" step="1" id="price"
-                                                        name="price" placeholder="{{ localize('Product price') }}"
-                                                        class="form-control" value="{{ $price }}"
-                                                        {{ !$product->has_variation ? 'required' : '' }}>
-                                                    
+                                                        {{ !$product->has_variation ? 'required' : '' }}>                                                   
+
                                                 </div>
                                             </div>
                                             <div class="col-lg-3">
@@ -343,14 +357,14 @@
                                         @php
                                             $sizes = \App\Models\VariationValue::where('variation_id', 1)->get();
                                             $colors = \App\Models\VariationValue::where('variation_id', 2)->get();
-                                            
+
                                             $selectedSizeIds = $product
                                                 ->variation_combinations()
                                                 ->where('variation_id', 1)
                                                 ->pluck('variation_value_id')
                                                 ->unique()
                                                 ->toArray();
-                                            
+
                                             $selectedColorIds = $product
                                                 ->variation_combinations()
                                                 ->where('variation_id', 2)
@@ -421,13 +435,16 @@
                                                 <div class="col-lg-6">
                                                     <div class="variationvalues">
                                                         @php
-                                                            $variation_values = \App\Models\VariationValue::whereNotIn('variation_id', [1, 2])
+                                                            $variation_values = \App\Models\VariationValue::whereNotIn(
+                                                                'variation_id',
+                                                                [1, 2],
+                                                            )
                                                                 ->where('variation_id', $combination['id'])
                                                                 ->get();
                                                             $old_val = array_map(function ($val) {
                                                                 return $val['id'];
                                                             }, $combination['values']);
-                                                            
+
                                                         @endphp
 
                                                         <div class="d-flex">
@@ -478,8 +495,9 @@
                                             <div class="variation_combination" id="variation_combination">
                                                 {{-- variation combinations here --}}
                                                 @if ($product->has_variation)
-                                                    @include('backend.pages.products.products.update_variation_combinations',
-                                                    [
+                                                    @include(
+                                                        'backend.pages.products.products.update_variation_combinations',
+                                                        [
                                                             'variations' => $product->variations,
                                                         ]
                                                     )
@@ -523,8 +541,12 @@
                                     <div class="row g-3">
                                         <div class="col-lg-6">
                                             @php
-                                                $start_date = $product->discount_start_date ? date('m/d/Y', $product->discount_start_date) : null;
-                                                $end_date = $product->discount_end_date ? date('m/d/Y', $product->discount_end_date) : null;
+                                                $start_date = $product->discount_start_date
+                                                    ? date('m/d/Y', $product->discount_start_date)
+                                                    : null;
+                                                $end_date = $product->discount_end_date
+                                                    ? date('m/d/Y', $product->discount_end_date)
+                                                    : null;
                                             @endphp
 
                                             <div class="mb-3">

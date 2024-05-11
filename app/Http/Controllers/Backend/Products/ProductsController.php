@@ -192,7 +192,7 @@ class ProductsController extends Controller
                 $product->min_price =  priceToUsd($request->price);
                 $product->max_price =  priceToUsd($request->price);
             }
-
+          
             # discount
             $product->discount_value    = $request->discount_value ?? 0;
             $product->discount_type     = $request->discount_type;
@@ -261,8 +261,7 @@ class ProductsController extends Controller
                     $product_variation              = new ProductVariation;
                     $product_variation->product_id  = $product->id;
                     $product_variation->variation_key        = $variation['variation_key'];
-                    // $product_variation->price       = priceToUsd($variation['price']);
-                    $product_variation->price       = $variation['price'];
+                    $product_variation->price       = priceToUsd($variation['price']);
                     $product_variation->sku         = $variation['sku'];
                     $product_variation->code         = $variation['code'];
                     $product_variation->save();
@@ -287,8 +286,7 @@ class ProductsController extends Controller
                 $variation->product_id  = $product->id;
                 $variation->sku         = $request->sku;
                 $variation->code         = $request->code;
-                // $variation->price       = priceToUsd($request->price);
-                $variation->price       = $request->price;
+                $variation->price       = priceToUsd($request->price);
                 $variation->save();
                 $product_variation_stock                          = new ProductVariationStock;
                 $product_variation_stock->product_variation_id    = $variation->id;
@@ -377,7 +375,7 @@ class ProductsController extends Controller
                     $product->size_guide        = $request->size_guide;
                     $product->vedio_link        = $request->vedio_link;
 
-                    # min-max price
+                    // # min-max price
                     if ($request->has('is_variant') && $request->has('variations')) {
                         $product->min_price =  priceToUsd(min(array_column($request->variations, 'price')));
                         $product->max_price =  priceToUsd(max(array_column($request->variations, 'price')));
@@ -523,8 +521,7 @@ class ProductsController extends Controller
                         $variation->variation_key        = null;
                         $variation->sku                  = $request->sku;
                         $variation->code                  = $request->code;
-                        // $variation->price                = priceToUsd($request->price);
-                        $variation->price                = $request->price;
+                        $variation->price                = priceToUsd($request->price);
                         $variation->save();
 
 
@@ -643,6 +640,7 @@ class ProductsController extends Controller
                  
                     $product->min_price =  priceToUsd($temporaryProduct->price);
                     $product->max_price =  priceToUsd($temporaryProduct->price);
+
                     
 
                     # discount
@@ -686,8 +684,7 @@ class ProductsController extends Controller
                         $variation->product_id = $product->id;
                         $variation->sku        = $temporaryProduct->sku;
                         $variation->code       = $temporaryProduct->code;
-                        // $variation->price      = priceToUsd($temporaryProduct->price);
-                        $variation->price      = $temporaryProduct->price;
+                        $variation->price      = priceToUsd($temporaryProduct->price);
                         $variation->save();
 
                         if ($variation) {
