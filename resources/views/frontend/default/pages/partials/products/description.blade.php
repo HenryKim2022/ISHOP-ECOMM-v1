@@ -16,9 +16,12 @@
         </div>
 
         <div class="tab-pane fade px-4 py-5" id="vedio">
-           
-            {!! $product->vedio_link !!}
-
+            @if ($product->vedio_link)
+                {!! $product->vedio_link !!}
+            @else
+                <div class="text-dark text-center border py-2">{{ localize('Not Available') }}
+                </div>
+            @endif
           
         </div>
 
