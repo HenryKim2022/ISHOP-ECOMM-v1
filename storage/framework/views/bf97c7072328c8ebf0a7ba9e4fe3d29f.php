@@ -279,10 +279,8 @@
                                             $first_variation = $product->variations->first();
                                             if (!$first_variation && !$product->has_variation) {
                                                 $price = $product->min_price;
-                                                // // if (Session::has('currency_code') && Session::has('local_currency_rate')) {
-                                                //     $price = floatval($price) * floatval(Session::get('local_currency_rate'));
-                                                // // } 
-                                                // convert amount equal to local currency
+                                               
+                                                // CUST ADDED: convert amount equal to local currency
                                                 if (Session::has('currency_code') && Session::has('local_currency_rate')) {
                                                     $price = floatval($price) / (floatval(env('DEFAULT_CURRENCY_RATE')) || 1);
                                                     $price = floatval($price) * floatval(Session::get('local_currency_rate'));
@@ -290,7 +288,7 @@
 
                                             } else {
                                                 $price = !$product->has_variation ? $first_variation->price : 0;
-                                                // convert amount equal to local currency
+                                                // CUST ADDED: convert amount equal to local currency
                                                 if (Session::has('currency_code') && Session::has('local_currency_rate')) {
                                                     $price = floatval($price) / (floatval(env('DEFAULT_CURRENCY_RATE')) || 1);
                                                     $price = floatval($price) * floatval(Session::get('local_currency_rate'));
@@ -314,8 +312,7 @@
                                                     <input type="number" min="0" step="0.0001" id="price"
                                                         name="price" placeholder="<?php echo e(localize('Product price')); ?>"
                                                         class="form-control" value="<?php echo e($price); ?>"
-                                                        <?php echo e(!$product->has_variation ? 'required' : ''); ?>>
-                                                    
+                                                        <?php echo e(!$product->has_variation ? 'required' : ''); ?>>                                                   
 
                                                 </div>
                                             </div>

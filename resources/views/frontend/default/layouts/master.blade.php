@@ -7,9 +7,9 @@
     }
 @endphp
 @if ($localLang->is_rtl == 1)
-    <html dir="rtl" lang="{{ $locale }}" data-bs-theme="light">
+    <html dir="rtl" lang="{{ $locale }}" data-bs-theme="dark">
 @else
-    <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-bs-theme="light">
+    <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-bs-theme="dark">
 @endif
 
 <head>
