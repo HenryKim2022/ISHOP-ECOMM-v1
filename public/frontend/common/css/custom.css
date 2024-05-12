@@ -437,6 +437,16 @@ html:not([dir="rtl"]) .toast-close-button {
 
 
 
+
+:root {
+  --gutter-bg-none: rgba(0, 0, 0, 0);
+  /* --gutter-bg-none: white; Set the default value for light mode */
+  /* --gutter-bg-none: #1e293b; Set the default value for dark mode */
+  --gutter-bg-transparent-color: transparent;
+}
+
+
+
 /* CSS untuk breakpoint XXS */
 @media (max-width: 410px) {
   .hero-btns {
@@ -448,6 +458,14 @@ html:not([dir="rtl"]) .toast-close-button {
     margin: 0;
     display: block;
   }
+
+  .dark .gheader{
+    background-color: var(--gutter-bg-none) !important;
+  }
+  .light .gheader{
+    background-color: var(--gutter-bg-none) !important;
+  }
+  
 }
 /* CSS untuk breakpoint XS */
 @media (min-width: 408px) and (max-width: 575.98px) {
@@ -460,6 +478,13 @@ html:not([dir="rtl"]) .toast-close-button {
     margin: 0;
     display: block;
   }
+  .dark .gheader{
+    background-color: var(--gutter-bg-none) !important;
+  }
+  .light .gheader{
+    background-color: var(--gutter-bg-none) !important;
+  }
+  
 }
 
 /* CSS untuk breakpoint SM */
@@ -472,6 +497,13 @@ html:not([dir="rtl"]) .toast-close-button {
     right: 0;
     display: flex;
   }
+  .dark .gheader{
+    background-color: var(--gutter-bg-none) !important;
+  }
+  .light .gheader{
+    background-color: var(--gutter-bg-none) !important;
+  }
+  
 }
 
 /* CSS untuk breakpoint MD */
@@ -484,6 +516,13 @@ html:not([dir="rtl"]) .toast-close-button {
     right: 0;
     display: flex;
   }
+  .dark .gheader{
+    background-color: var(--gutter-bg-none) !important;
+  }
+  .light .gheader{
+    background-color: var(--gutter-bg-none) !important;
+  }
+  
 }
 
 /* CSS untuk breakpoint LG */
@@ -520,4 +559,9 @@ html:not([dir="rtl"]) .toast-close-button {
     right: 0;
     display: flex;
   }
+}
+
+
+.gheader{
+  background-color: var(--gutter-bg-none) !important;
 }

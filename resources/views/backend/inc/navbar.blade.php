@@ -21,7 +21,7 @@
                             @if (getSetting('admin_panel_logo') != '')
                                 <img src="{{ uploadedAsset(getSetting('admin_panel_logo')) }}" class="tt-brand-logo ms-2" alt="logo" />
                             @else
-                                <h4 class="d-inline-block px-2 bg-white m-auto">{{ env('APP_NAME') }}</h4>
+                                <h4 class="d-inline-block px-2 m-auto">{{ env('APP_NAME') }}</h4>
                             @endif
                         </a>
                     </div>

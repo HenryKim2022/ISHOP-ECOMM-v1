@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 11, 2024 at 01:23 PM
--- Server version: 8.0.30
--- PHP Version: 8.2.18
+-- Generation Time: May 12, 2024 at 03:34 AM
+-- Server version: 10.5.24-MariaDB-cll-lve
+-- PHP Version: 8.1.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,9 +28,9 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `assign_tickets` (
-  `id` bigint UNSIGNED NOT NULL,
-  `ticket_id` int NOT NULL,
-  `assign_user_id` int NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `ticket_id` int(11) NOT NULL,
+  `assign_user_id` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -42,21 +42,21 @@ CREATE TABLE `assign_tickets` (
 --
 
 CREATE TABLE `blogs` (
-  `id` bigint UNSIGNED NOT NULL,
-  `title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `blog_category_id` bigint UNSIGNED NOT NULL,
-  `short_description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `thumbnail_image` bigint UNSIGNED DEFAULT NULL,
-  `banner` bigint UNSIGNED DEFAULT NULL,
-  `video_provider` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'youtube' COMMENT 'youtube / vimeo / ...',
-  `video_link` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `is_active` tinyint NOT NULL DEFAULT '1',
-  `is_popular` tinyint NOT NULL DEFAULT '0',
-  `meta_title` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `meta_img` bigint UNSIGNED DEFAULT NULL,
-  `meta_description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` text NOT NULL,
+  `slug` text NOT NULL,
+  `blog_category_id` bigint(20) UNSIGNED NOT NULL,
+  `short_description` longtext DEFAULT NULL,
+  `description` longtext DEFAULT NULL,
+  `thumbnail_image` bigint(20) UNSIGNED DEFAULT NULL,
+  `banner` bigint(20) UNSIGNED DEFAULT NULL,
+  `video_provider` varchar(191) NOT NULL DEFAULT 'youtube' COMMENT 'youtube / vimeo / ...',
+  `video_link` text DEFAULT NULL,
+  `is_active` tinyint(4) NOT NULL DEFAULT 1,
+  `is_popular` tinyint(4) NOT NULL DEFAULT 0,
+  `meta_title` mediumtext DEFAULT NULL,
+  `meta_img` bigint(20) UNSIGNED DEFAULT NULL,
+  `meta_description` longtext DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -69,8 +69,8 @@ CREATE TABLE `blogs` (
 --
 
 CREATE TABLE `blog_categories` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -83,12 +83,12 @@ CREATE TABLE `blog_categories` (
 --
 
 CREATE TABLE `blog_localizations` (
-  `id` bigint UNSIGNED NOT NULL,
-  `blog_id` bigint UNSIGNED NOT NULL,
-  `title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `short_description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `lang_key` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `blog_id` bigint(20) UNSIGNED NOT NULL,
+  `title` text NOT NULL,
+  `short_description` longtext DEFAULT NULL,
+  `description` longtext DEFAULT NULL,
+  `lang_key` varchar(191) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -101,9 +101,9 @@ CREATE TABLE `blog_localizations` (
 --
 
 CREATE TABLE `blog_tags` (
-  `id` bigint UNSIGNED NOT NULL,
-  `blog_id` bigint UNSIGNED NOT NULL,
-  `tag_id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `blog_id` bigint(20) UNSIGNED NOT NULL,
+  `tag_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -116,9 +116,9 @@ CREATE TABLE `blog_tags` (
 --
 
 CREATE TABLE `blog_themes` (
-  `id` bigint UNSIGNED NOT NULL,
-  `blog_id` bigint UNSIGNED NOT NULL,
-  `theme_id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `blog_id` bigint(20) UNSIGNED NOT NULL,
+  `theme_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -130,15 +130,15 @@ CREATE TABLE `blog_themes` (
 --
 
 CREATE TABLE `brands` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `brand_image` bigint UNSIGNED DEFAULT NULL,
-  `total_sales_amount` double NOT NULL DEFAULT '0',
-  `is_active` tinyint NOT NULL DEFAULT '1',
-  `meta_title` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_image` bigint UNSIGNED DEFAULT NULL,
-  `meta_description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `slug` varchar(191) NOT NULL,
+  `brand_image` bigint(20) UNSIGNED DEFAULT NULL,
+  `total_sales_amount` double NOT NULL DEFAULT 0,
+  `is_active` tinyint(4) NOT NULL DEFAULT 1,
+  `meta_title` varchar(191) DEFAULT NULL,
+  `meta_image` bigint(20) UNSIGNED DEFAULT NULL,
+  `meta_description` longtext DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -154,7 +154,16 @@ INSERT INTO `brands` (`id`, `name`, `slug`, `brand_image`, `total_sales_amount`,
 (5, 'HP', 'hp-o3Gup', NULL, 0, 0, 'HP', NULL, 'HP Brand', '2024-03-20 09:59:17', '2024-05-11 05:18:14', '2024-05-11 05:18:14'),
 (6, 'Lenovo', 'lenovo-PdHtW', NULL, 0, 0, 'Lenovo', NULL, 'Lenovo Brand', '2024-03-20 09:59:52', '2024-05-11 05:18:05', '2024-05-11 05:18:05'),
 (7, 'LionStar', 'lionstar-yYL4d', NULL, 0, 0, 'LionStar', NULL, 'LionStar Brand', '2024-03-20 10:05:54', '2024-05-11 05:17:26', '2024-05-11 05:17:26'),
-(8, 'Mixio', 'mixio-is2nf', NULL, 0, 0, 'Mixio', NULL, 'MixioBrand', '2024-03-20 10:52:48', '2024-05-11 05:17:19', '2024-05-11 05:17:19');
+(8, 'Mixio', 'mixio-is2nf', NULL, 0, 0, 'Mixio', NULL, 'MixioBrand', '2024-03-20 10:52:48', '2024-05-11 05:17:19', '2024-05-11 05:17:19'),
+(9, 'BALENCIAGA', 'balenciaga-14Ec0', 53, 0, 1, NULL, NULL, NULL, '2024-05-11 07:20:44', '2024-05-11 07:22:30', '2024-05-11 07:22:30'),
+(10, 'GUCCI', 'gucci-yj0EC', 53, 0, 1, NULL, NULL, NULL, '2024-05-11 07:21:34', '2024-05-11 07:22:36', '2024-05-11 07:22:36'),
+(11, 'LV', 'lv-sgh2s', 53, 0, 1, NULL, NULL, NULL, '2024-05-11 07:21:53', '2024-05-11 07:22:41', '2024-05-11 07:22:41'),
+(12, 'Broodis', 'broodis-29u7Y', 53, 0, 1, NULL, NULL, NULL, '2024-05-11 07:23:11', '2024-05-11 07:23:11', NULL),
+(13, '3second', '3second-1Paxf', 53, 0, 1, NULL, NULL, NULL, '2024-05-11 07:24:26', '2024-05-11 07:24:26', NULL),
+(14, 'Erigo', 'erigo-ros0Y', 53, 0, 1, NULL, NULL, NULL, '2024-05-11 07:24:48', '2024-05-11 07:24:48', NULL),
+(15, 'Hammer', 'hammer-zQw1j', 53, 0, 1, NULL, NULL, NULL, '2024-05-11 07:25:03', '2024-05-11 07:25:03', NULL),
+(16, 'Cotton Ink', 'cotton-ink-rEcIy', 53, 0, 1, NULL, NULL, NULL, '2024-05-11 07:25:41', '2024-05-11 07:25:41', NULL),
+(17, 'Eiger', 'eiger-jEgVU', 53, 0, 1, NULL, NULL, NULL, '2024-05-11 07:26:07', '2024-05-11 07:26:07', NULL);
 
 -- --------------------------------------------------------
 
@@ -163,18 +172,33 @@ INSERT INTO `brands` (`id`, `name`, `slug`, `brand_image`, `total_sales_amount`,
 --
 
 CREATE TABLE `brand_localizations` (
-  `id` bigint UNSIGNED NOT NULL,
-  `brand_id` bigint UNSIGNED DEFAULT NULL,
-  `lang_key` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `brand_image` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `meta_title` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_image` bigint UNSIGNED DEFAULT NULL,
-  `meta_description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `brand_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `lang_key` varchar(191) NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `brand_image` text DEFAULT NULL,
+  `meta_title` varchar(191) DEFAULT NULL,
+  `meta_image` bigint(20) UNSIGNED DEFAULT NULL,
+  `meta_description` longtext DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `brand_localizations`
+--
+
+INSERT INTO `brand_localizations` (`id`, `brand_id`, `lang_key`, `name`, `brand_image`, `meta_title`, `meta_image`, `meta_description`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(9, 9, 'en', 'BALENCIAGA', '53', NULL, NULL, NULL, '2024-05-11 07:20:45', '2024-05-11 07:20:45', NULL),
+(10, 10, 'en', 'GUCCI', '53', NULL, NULL, NULL, '2024-05-11 07:21:34', '2024-05-11 07:21:34', NULL),
+(11, 11, 'en', 'LV', '53', NULL, NULL, NULL, '2024-05-11 07:21:53', '2024-05-11 07:21:53', NULL),
+(12, 12, 'en', 'Broodis', '53', NULL, NULL, NULL, '2024-05-11 07:23:11', '2024-05-11 07:23:11', NULL),
+(13, 13, 'en', '3second', '53', NULL, NULL, NULL, '2024-05-11 07:24:26', '2024-05-11 07:24:26', NULL),
+(14, 14, 'en', 'Erigo', '53', NULL, NULL, NULL, '2024-05-11 07:24:48', '2024-05-11 07:24:48', NULL),
+(15, 15, 'en', 'Hammer', '53', NULL, NULL, NULL, '2024-05-11 07:25:03', '2024-05-11 07:25:03', NULL),
+(16, 16, 'en', 'Cotton Ink', '53', NULL, NULL, NULL, '2024-05-11 07:25:41', '2024-05-11 07:25:41', NULL),
+(17, 17, 'en', 'Eiger', '53', NULL, NULL, NULL, '2024-05-11 07:26:08', '2024-05-11 07:26:08', NULL);
 
 -- --------------------------------------------------------
 
@@ -183,13 +207,13 @@ CREATE TABLE `brand_localizations` (
 --
 
 CREATE TABLE `campaigns` (
-  `id` bigint UNSIGNED NOT NULL,
-  `title` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `banner` bigint UNSIGNED DEFAULT NULL,
-  `start_date` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `end_date` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_published` tinyint NOT NULL DEFAULT '1',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(191) NOT NULL,
+  `slug` varchar(191) DEFAULT NULL,
+  `banner` bigint(20) UNSIGNED DEFAULT NULL,
+  `start_date` varchar(191) DEFAULT NULL,
+  `end_date` varchar(191) DEFAULT NULL,
+  `is_published` tinyint(4) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -200,7 +224,7 @@ CREATE TABLE `campaigns` (
 --
 
 INSERT INTO `campaigns` (`id`, `title`, `slug`, `banner`, `start_date`, `end_date`, `is_published`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Campaign Title 1', 'campaign-title-1-mcfom', 40, '1714521600', '1715385600', 1, '2024-05-02 12:16:06', '2024-05-02 12:16:06', NULL);
+(1, 'Campaign Title 1', 'campaign-title-1-mcfom', 40, '1714521600', '1719705600', 1, '2024-05-02 12:16:06', '2024-05-11 11:51:24', NULL);
 
 -- --------------------------------------------------------
 
@@ -209,9 +233,9 @@ INSERT INTO `campaigns` (`id`, `title`, `slug`, `banner`, `start_date`, `end_dat
 --
 
 CREATE TABLE `campaign_products` (
-  `id` bigint UNSIGNED NOT NULL,
-  `campaign_id` bigint UNSIGNED NOT NULL,
-  `product_id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `campaign_id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -224,9 +248,9 @@ CREATE TABLE `campaign_products` (
 --
 
 CREATE TABLE `campaign_themes` (
-  `id` bigint UNSIGNED NOT NULL,
-  `campaign_id` bigint UNSIGNED NOT NULL,
-  `theme_id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `campaign_id` bigint(20) UNSIGNED NOT NULL,
+  `theme_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -245,17 +269,24 @@ INSERT INTO `campaign_themes` (`id`, `campaign_id`, `theme_id`, `created_at`, `u
 --
 
 CREATE TABLE `carts` (
-  `id` bigint UNSIGNED NOT NULL,
-  `user_id` bigint UNSIGNED DEFAULT NULL,
-  `guest_user_id` bigint DEFAULT NULL,
-  `location_id` bigint UNSIGNED DEFAULT NULL,
-  `product_variation_id` bigint UNSIGNED NOT NULL,
-  `qty` int NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `guest_user_id` bigint(20) DEFAULT NULL,
+  `location_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `product_variation_id` bigint(20) UNSIGNED NOT NULL,
+  `qty` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `product_id` bigint UNSIGNED NOT NULL
+  `product_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `carts`
+--
+
+INSERT INTO `carts` (`id`, `user_id`, `guest_user_id`, `location_id`, `product_variation_id`, `qty`, `created_at`, `updated_at`, `deleted_at`, `product_id`) VALUES
+(9, 1, NULL, 1, 12, 1, '2024-05-11 13:32:59', '2024-05-11 13:32:59', NULL, 12);
 
 -- --------------------------------------------------------
 
@@ -264,23 +295,23 @@ CREATE TABLE `carts` (
 --
 
 CREATE TABLE `categories` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `parent_id` bigint UNSIGNED DEFAULT NULL,
-  `level` int NOT NULL COMMENT 'level of the category',
-  `sorting_order_level` int NOT NULL DEFAULT '0',
-  `thumbnail_image` bigint UNSIGNED DEFAULT NULL,
-  `icon` bigint UNSIGNED DEFAULT NULL,
-  `is_featured` tinyint NOT NULL DEFAULT '0',
-  `is_top` tinyint NOT NULL DEFAULT '0',
-  `total_sale_count` int NOT NULL DEFAULT '0',
-  `meta_title` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `meta_image` bigint UNSIGNED DEFAULT NULL,
-  `meta_description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `slug` varchar(191) DEFAULT NULL,
+  `parent_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `level` int(11) NOT NULL COMMENT 'level of the category',
+  `sorting_order_level` int(11) NOT NULL DEFAULT 0,
+  `thumbnail_image` bigint(20) UNSIGNED DEFAULT NULL,
+  `icon` bigint(20) UNSIGNED DEFAULT NULL,
+  `is_featured` tinyint(4) NOT NULL DEFAULT 0,
+  `is_top` tinyint(4) NOT NULL DEFAULT 0,
+  `total_sale_count` int(11) NOT NULL DEFAULT 0,
+  `meta_title` mediumtext DEFAULT NULL,
+  `meta_image` bigint(20) UNSIGNED DEFAULT NULL,
+  `meta_description` longtext DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `description` longtext DEFAULT NULL,
   `deleted_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -289,14 +320,8 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `slug`, `parent_id`, `level`, `sorting_order_level`, `thumbnail_image`, `icon`, `is_featured`, `is_top`, `total_sale_count`, `meta_title`, `meta_image`, `meta_description`, `created_at`, `updated_at`, `description`, `deleted_at`) VALUES
-(1, 'Audio, Camera, & Other Electronics', 'audio-camera-other-electronics-y9cat', NULL, 0, 0, NULL, NULL, 0, 0, 0, 'A', NULL, 'Product List', '2024-03-20 09:38:23', '2024-05-11 05:06:30', 'Audio, Kamera & Elektronik Lainnya', '2024-05-11 12:06:30'),
-(2, 'Book', 'book-sdyep', NULL, 0, 2, NULL, NULL, 0, 0, 0, 'B', NULL, 'Books', '2024-03-20 09:40:57', '2024-05-11 05:06:03', 'Buku', '2024-05-11 12:06:03'),
-(3, 'Kitchen', 'kitchen-77h8a', NULL, 0, 4, NULL, NULL, 0, 0, 0, 'D', NULL, 'Dapur', '2024-03-20 09:42:51', '2024-05-11 05:05:57', 'Dapur', '2024-05-11 12:05:57'),
-(4, 'Electronics', 'electronics-jM7Rq', NULL, 0, 5, NULL, NULL, 0, 0, 0, 'E', NULL, 'Elektronik', '2024-03-20 10:10:25', '2024-05-11 05:05:49', 'Elektronik', '2024-05-11 12:05:49'),
-(5, 'Fashion', 'fashion-rdo5l', NULL, 0, 0, NULL, NULL, 0, 0, 0, 'F', NULL, 'Fashion', '2024-03-20 10:13:14', '2024-05-11 05:37:55', 'Fashion', '2024-05-11 12:37:55'),
-(6, 'Camera Accessoris', 'camera-accessoris-zvnmz', NULL, 1, 1, NULL, NULL, 0, 0, 0, 'A', NULL, 'Aksesoris Kamera', '2024-03-20 10:24:00', '2024-05-11 05:06:19', 'Aksesoris Kamera', '2024-05-11 12:06:19'),
-(7, 'Camera Digital', 'camera-digital-fiuph', NULL, 0, 2, NULL, NULL, 0, 0, 0, NULL, NULL, NULL, '2024-03-20 10:25:25', '2024-05-11 05:06:09', 'Kamera Digital', '2024-05-11 12:06:09'),
-(8, 'Tester', 'tester-6ovyb', NULL, 1, 0, NULL, NULL, 0, 0, 0, NULL, NULL, NULL, '2024-03-20 12:36:07', '2024-05-11 05:06:25', 'Electronics', '2024-05-11 12:06:25');
+(10, 'Fashion', 'fashion-wuUWJ', NULL, 0, 1, 52, NULL, 0, 0, 0, NULL, NULL, NULL, '2024-05-11 07:29:55', '2024-05-11 07:29:55', NULL, '0000-00-00 00:00:00'),
+(11, 'Outfit', 'outfit-qzn1m', 10, 1, 2, 52, NULL, 0, 0, 0, NULL, NULL, NULL, '2024-05-11 07:31:50', '2024-05-11 07:34:33', NULL, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -305,9 +330,9 @@ INSERT INTO `categories` (`id`, `name`, `slug`, `parent_id`, `level`, `sorting_o
 --
 
 CREATE TABLE `category_brands` (
-  `id` bigint UNSIGNED NOT NULL,
-  `category_id` bigint UNSIGNED NOT NULL,
-  `brand_id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `category_id` bigint(20) UNSIGNED NOT NULL,
+  `brand_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -320,19 +345,27 @@ CREATE TABLE `category_brands` (
 --
 
 CREATE TABLE `category_localizations` (
-  `id` bigint UNSIGNED NOT NULL,
-  `category_id` bigint UNSIGNED NOT NULL,
-  `lang_key` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `thumbnail_image` bigint UNSIGNED DEFAULT NULL,
-  `meta_title` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_image` bigint UNSIGNED DEFAULT NULL,
-  `meta_description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `category_id` bigint(20) UNSIGNED NOT NULL,
+  `lang_key` varchar(191) NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `thumbnail_image` bigint(20) UNSIGNED DEFAULT NULL,
+  `meta_title` varchar(191) DEFAULT NULL,
+  `meta_image` bigint(20) UNSIGNED DEFAULT NULL,
+  `meta_description` longtext DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+  `description` longtext DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `category_localizations`
+--
+
+INSERT INTO `category_localizations` (`id`, `category_id`, `lang_key`, `name`, `thumbnail_image`, `meta_title`, `meta_image`, `meta_description`, `created_at`, `updated_at`, `deleted_at`, `description`) VALUES
+(9, 10, 'en', 'Fashion', 52, NULL, NULL, NULL, '2024-05-11 07:29:56', '2024-05-11 07:29:56', NULL, NULL),
+(10, 11, 'en', 'Outfit', 52, NULL, NULL, NULL, '2024-05-11 07:34:33', '2024-05-11 07:34:33', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -341,12 +374,20 @@ CREATE TABLE `category_localizations` (
 --
 
 CREATE TABLE `category_themes` (
-  `id` bigint UNSIGNED NOT NULL,
-  `category_id` bigint UNSIGNED NOT NULL,
-  `theme_id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `category_id` bigint(20) UNSIGNED NOT NULL,
+  `theme_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `category_themes`
+--
+
+INSERT INTO `category_themes` (`id`, `category_id`, `theme_id`, `created_at`, `updated_at`) VALUES
+(9, 10, 1, NULL, NULL),
+(10, 11, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -355,10 +396,10 @@ CREATE TABLE `category_themes` (
 --
 
 CREATE TABLE `cities` (
-  `id` bigint UNSIGNED NOT NULL,
-  `state_id` bigint UNSIGNED NOT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_active` tinyint NOT NULL DEFAULT '0',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `state_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `is_active` tinyint(4) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -877,13 +918,13 @@ INSERT INTO `cities` (`id`, `state_id`, `name`, `is_active`, `created_at`, `upda
 --
 
 CREATE TABLE `contact_us_messages` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `support_for` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'delivery_problem | customer_service | other_service',
-  `message` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_seen` tinyint NOT NULL DEFAULT '0',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `email` varchar(191) NOT NULL,
+  `phone` varchar(191) NOT NULL,
+  `support_for` varchar(191) NOT NULL COMMENT 'delivery_problem | customer_service | other_service',
+  `message` longtext NOT NULL,
+  `is_seen` tinyint(4) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -896,10 +937,10 @@ CREATE TABLE `contact_us_messages` (
 --
 
 CREATE TABLE `countries` (
-  `id` bigint UNSIGNED NOT NULL,
-  `code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_active` tinyint NOT NULL DEFAULT '0',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `code` varchar(191) NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `is_active` tinyint(4) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -1164,22 +1205,22 @@ INSERT INTO `countries` (`id`, `code`, `name`, `is_active`, `created_at`, `updat
 --
 
 CREATE TABLE `coupons` (
-  `id` bigint UNSIGNED NOT NULL,
-  `shop_id` bigint UNSIGNED NOT NULL,
-  `banner` bigint UNSIGNED DEFAULT NULL,
-  `code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `discount_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'flat/percentage',
-  `discount_value` double NOT NULL DEFAULT '0',
-  `is_free_shipping` tinyint NOT NULL DEFAULT '0',
-  `start_date` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `end_date` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `min_spend` double NOT NULL DEFAULT '0',
-  `max_discount_amount` double NOT NULL DEFAULT '0',
-  `total_usage_limit` int NOT NULL DEFAULT '1',
-  `total_usage_count` int NOT NULL DEFAULT '0',
-  `customer_usage_limit` int NOT NULL DEFAULT '1',
-  `product_ids` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT 'Coupon will be applicable only for the products selected',
-  `category_ids` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT 'Coupon will be applicable only for   categories selected',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `shop_id` bigint(20) UNSIGNED NOT NULL,
+  `banner` bigint(20) UNSIGNED DEFAULT NULL,
+  `code` varchar(191) NOT NULL,
+  `discount_type` varchar(191) NOT NULL COMMENT 'flat/percentage',
+  `discount_value` double NOT NULL DEFAULT 0,
+  `is_free_shipping` tinyint(4) NOT NULL DEFAULT 0,
+  `start_date` text DEFAULT NULL,
+  `end_date` text DEFAULT NULL,
+  `min_spend` double NOT NULL DEFAULT 0,
+  `max_discount_amount` double NOT NULL DEFAULT 0,
+  `total_usage_limit` int(11) NOT NULL DEFAULT 1,
+  `total_usage_count` int(11) NOT NULL DEFAULT 0,
+  `customer_usage_limit` int(11) NOT NULL DEFAULT 1,
+  `product_ids` longtext DEFAULT NULL COMMENT 'Coupon will be applicable only for the products selected',
+  `category_ids` longtext DEFAULT NULL COMMENT 'Coupon will be applicable only for   categories selected',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -1192,7 +1233,8 @@ CREATE TABLE `coupons` (
 INSERT INTO `coupons` (`id`, `shop_id`, `banner`, `code`, `discount_type`, `discount_value`, `is_free_shipping`, `start_date`, `end_date`, `min_spend`, `max_discount_amount`, `total_usage_limit`, `total_usage_count`, `customer_usage_limit`, `product_ids`, `category_ids`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, NULL, 'DIGI75', 'percent', 75, 1, '1710892800', '1714435200', 0, 80000, 8, 0, 8, '[\"1\"]', '[\"4\"]', '2024-03-20 11:21:33', '2024-05-02 11:47:25', '2024-05-02 11:47:25'),
 (2, 1, NULL, 'BOO25', 'percent', 25, 1, '1710028800', '1713398400', 12000, 75000, 3, 0, 3, '[\"7\"]', '[\"2\"]', '2024-03-21 03:57:51', '2024-05-02 11:47:10', '2024-05-02 11:47:10'),
-(3, 1, NULL, 'NARANJA', 'percent', 100, 1, '1714608000', '1714780800', 0, 100000, 3, 0, 3, '[\"1\"]', '[\"2\"]', '2024-05-02 11:46:38', '2024-05-11 05:19:46', '2024-05-11 05:19:46');
+(3, 1, NULL, 'NARANJA', 'percent', 100, 1, '1714608000', '1714780800', 0, 100000, 3, 0, 3, '[\"1\"]', '[\"2\"]', '2024-05-02 11:46:38', '2024-05-11 05:19:46', '2024-05-11 05:19:46'),
+(4, 1, NULL, 'DISC75', 'percent', 75, 1, '1714521600', '1717891200', 0, 190000, 3, 0, 3, '[\"10\",\"11\"]', '[\"10\"]', '2024-05-11 11:53:05', '2024-05-11 11:53:05', NULL);
 
 -- --------------------------------------------------------
 
@@ -1201,12 +1243,19 @@ INSERT INTO `coupons` (`id`, `shop_id`, `banner`, `code`, `discount_type`, `disc
 --
 
 CREATE TABLE `coupon_themes` (
-  `id` bigint UNSIGNED NOT NULL,
-  `coupon_id` bigint UNSIGNED NOT NULL,
-  `theme_id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `coupon_id` bigint(20) UNSIGNED NOT NULL,
+  `theme_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `coupon_themes`
+--
+
+INSERT INTO `coupon_themes` (`id`, `coupon_id`, `theme_id`, `created_at`, `updated_at`) VALUES
+(6, 4, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1215,10 +1264,10 @@ CREATE TABLE `coupon_themes` (
 --
 
 CREATE TABLE `coupon_usages` (
-  `id` bigint UNSIGNED NOT NULL,
-  `coupon_code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` bigint UNSIGNED NOT NULL,
-  `usage_count` int NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `coupon_code` varchar(191) NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `usage_count` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1230,13 +1279,13 @@ CREATE TABLE `coupon_usages` (
 --
 
 CREATE TABLE `currencies` (
-  `id` bigint UNSIGNED NOT NULL,
-  `code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `symbol` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `alignment` tinyint NOT NULL DEFAULT '0' COMMENT '0 for left, 1 for right',
-  `rate` double NOT NULL DEFAULT '1',
-  `is_active` tinyint NOT NULL DEFAULT '1',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `code` varchar(191) NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `symbol` varchar(191) NOT NULL,
+  `alignment` tinyint(4) NOT NULL DEFAULT 0 COMMENT '0 for left, 1 for right',
+  `rate` double NOT NULL DEFAULT 1,
+  `is_active` tinyint(4) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -1247,7 +1296,7 @@ CREATE TABLE `currencies` (
 --
 
 INSERT INTO `currencies` (`id`, `code`, `name`, `symbol`, `alignment`, `rate`, `is_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'usd', 'US Dollar', '$', 0, 1, 0, '2022-11-27 05:21:37', '2024-05-11 05:42:56', NULL),
+(1, 'usd', 'US Dollar', '$', 0, 1, 1, '2022-11-27 05:21:37', '2024-05-11 07:50:45', NULL),
 (2, 'idr', 'Indo Rupiah', 'Rp', 2, 15689.85, 1, '2024-03-18 00:47:48', '2024-03-20 13:33:42', NULL);
 
 -- --------------------------------------------------------
@@ -1257,14 +1306,14 @@ INSERT INTO `currencies` (`id`, `code`, `name`, `symbol`, `alignment`, `rate`, `
 --
 
 CREATE TABLE `enmart_modules` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_default` tinyint(1) DEFAULT '0',
-  `is_paid` tinyint(1) DEFAULT '0',
-  `is_verified` tinyint(1) DEFAULT '0',
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `purchase_code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `domain` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `is_default` tinyint(1) DEFAULT 0,
+  `is_paid` tinyint(1) DEFAULT 0,
+  `is_verified` tinyint(1) DEFAULT 0,
+  `description` text DEFAULT NULL,
+  `purchase_code` varchar(191) DEFAULT NULL,
+  `domain` varchar(191) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1284,13 +1333,13 @@ INSERT INTO `enmart_modules` (`id`, `name`, `is_default`, `is_paid`, `is_verifie
 --
 
 CREATE TABLE `failed_jobs` (
-  `id` bigint UNSIGNED NOT NULL,
-  `uuid` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(191) NOT NULL,
+  `connection` text NOT NULL,
+  `queue` text NOT NULL,
+  `payload` longtext NOT NULL,
+  `exception` longtext NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1300,13 +1349,13 @@ CREATE TABLE `failed_jobs` (
 --
 
 CREATE TABLE `grass_period_payments` (
-  `id` bigint UNSIGNED NOT NULL,
-  `user_id` int NOT NULL,
-  `order_id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `transaction_status` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status_code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `product_id` int NOT NULL,
-  `response` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `order_id` varchar(191) DEFAULT NULL,
+  `transaction_status` varchar(191) DEFAULT NULL,
+  `status_code` varchar(191) DEFAULT NULL,
+  `product_id` int(11) NOT NULL,
+  `response` longtext NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1318,16 +1367,16 @@ CREATE TABLE `grass_period_payments` (
 --
 
 CREATE TABLE `languages` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `flag` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_rtl` tinyint NOT NULL DEFAULT '0',
-  `is_active` tinyint NOT NULL DEFAULT '1',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `flag` varchar(191) DEFAULT NULL,
+  `code` varchar(191) NOT NULL,
+  `is_rtl` tinyint(4) NOT NULL DEFAULT 0,
+  `is_active` tinyint(4) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `font` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `font` varchar(191) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1336,7 +1385,7 @@ CREATE TABLE `languages` (
 
 INSERT INTO `languages` (`id`, `name`, `flag`, `code`, `is_rtl`, `is_active`, `created_at`, `updated_at`, `deleted_at`, `font`) VALUES
 (1, 'English', 'en', 'en', 0, 1, NULL, NULL, NULL, NULL),
-(2, 'Indonesia', 'id', 'id', 0, 0, '2024-03-20 09:12:29', '2024-03-20 09:17:24', NULL, 'Gordita-Regular.ttf'),
+(2, 'Indonesia', 'id', 'id', 0, 0, '2024-03-20 09:12:29', '2024-05-11 11:26:34', NULL, 'Gordita-Regular.ttf'),
 (3, 'Chinese', 'hk', 'ch', 0, 0, '2024-03-20 09:15:31', '2024-03-20 09:16:51', NULL, 'Gordita-Regular.ttf');
 
 -- --------------------------------------------------------
@@ -1346,11 +1395,11 @@ INSERT INTO `languages` (`id`, `name`, `flag`, `code`, `is_rtl`, `is_active`, `c
 --
 
 CREATE TABLE `licenses` (
-  `id` bigint UNSIGNED NOT NULL,
-  `purchase_code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `client_token` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `app_env` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_active` int DEFAULT '1',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `purchase_code` varchar(191) DEFAULT NULL,
+  `client_token` varchar(191) DEFAULT NULL,
+  `app_env` varchar(191) DEFAULT NULL,
+  `is_active` int(11) DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1362,10 +1411,10 @@ CREATE TABLE `licenses` (
 --
 
 CREATE TABLE `localizations` (
-  `id` bigint UNSIGNED NOT NULL,
-  `lang_key` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `t_key` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `t_value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `lang_key` varchar(191) NOT NULL,
+  `t_key` longtext NOT NULL,
+  `t_value` longtext NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -2375,7 +2424,7 @@ INSERT INTO `localizations` (`id`, `lang_key`, `t_key`, `t_value`, `created_at`,
 (995, 'en', 'currency_has_been_updated_successfully', 'Currency has been updated successfully', '2024-03-20 13:33:42', '2024-03-20 13:33:42', NULL),
 (996, 'en', 'language_you_are_trying_to_translate_is_not_available_or_not_active', 'Language you are trying to translate is not available or not active', '2024-03-20 13:38:12', '2024-03-20 13:38:12', NULL),
 (997, 'en', 'product_has_been_deleted_successfully', 'Product has been deleted successfully', '2024-03-20 13:52:30', '2024-03-20 13:52:30', NULL),
-(998, 'en', 'usdprice', 'usdprice', '2024-03-20 15:09:27', '2024-03-20 15:09:27', NULL),
+(998, 'en', 'idrprice', 'idrPrice', '2024-03-20 15:09:27', '2024-03-20 15:09:27', NULL),
 (999, 'en', 'we_have_listed_3_total_products', 'We have listed 3 total products.', '2024-03-20 23:13:19', '2024-03-20 23:13:19', NULL),
 (1000, 'en', 'sqlstate42s22_column_not_found_1054_unknown_column_idr_price_in_field_list_connection_mysql_sql_update_products_set_max_price__28680962533103_idr_price__706043250_productsupdated_at__20240321_070146_where_id__6', 'SQLSTATE[42S22]: Column not found: 1054 Unknown column \'idr_price\' in \'field list\' (Connection: mysql, SQL: update `products` set `max_price` = 2.8680962533103, `idr_price` = 706043250, `products`.`updated_at` = 2024-03-21 07:01:46 where `id` = 6)', '2024-03-21 00:01:46', '2024-03-21 00:01:46', NULL),
 (1001, 'en', 'attempt_to_read_property_rate_on_null', 'Attempt to read property \"rate\" on null', '2024-03-21 00:35:21', '2024-03-21 00:35:21', NULL),
@@ -2523,7 +2572,14 @@ INSERT INTO `localizations` (`id`, `lang_key`, `t_key`, `t_value`, `created_at`,
 (1143, 'en', 'tag_has_been_deleted_successfully', 'Tag has been deleted successfully', '2024-05-11 05:39:11', '2024-05-11 05:39:11', NULL),
 (1144, 'en', 'invoice_fonts', 'Invoice Fonts', '2024-05-11 05:41:40', '2024-05-11 05:41:40', NULL),
 (1145, 'en', 'update_invoice_fonts', 'Update Invoice Fonts', '2024-05-11 05:41:40', '2024-05-11 05:41:40', NULL),
-(1146, 'en', 'update_invoice_font', 'Update Invoice Font', '2024-05-11 05:41:40', '2024-05-11 05:41:40', NULL);
+(1146, 'en', 'update_invoice_font', 'Update Invoice Font', '2024-05-11 05:41:40', '2024-05-11 05:41:40', NULL),
+(1147, 'en', 'default_language_can_not_be_disabled', 'Default language can not be disabled', '2024-05-11 07:45:56', '2024-05-11 07:45:56', NULL),
+(1148, 'en', 'we_have_listed_1_total_products', 'We have listed 1 total products.', '2024-05-11 10:47:07', '2024-05-11 10:47:07', NULL),
+(1149, 'en', 'select_top_categories', 'Select Top Categories', '2024-05-11 11:22:04', '2024-05-11 11:22:04', NULL),
+(1150, 'en', 'welcome_back_to_', 'Welcome back to ', '2024-05-11 11:50:45', '2024-05-11 11:50:45', NULL),
+(1151, 'en', 'we_have_listed_2_total_products', 'We have listed 2 total products.', '2024-05-11 11:50:47', '2024-05-11 11:50:47', NULL),
+(1152, 'en', 'campaign_has_been_updated_successfully', 'Campaign has been updated successfully', '2024-05-11 11:51:24', '2024-05-11 11:51:24', NULL),
+(1153, 'en', 'welcome_back_to_', 'Welcome back to ', '2024-05-11 13:30:39', '2024-05-11 13:30:39', NULL);
 
 -- --------------------------------------------------------
 
@@ -2532,14 +2588,14 @@ INSERT INTO `localizations` (`id`, `lang_key`, `t_key`, `t_value`, `created_at`,
 --
 
 CREATE TABLE `locations` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `banner` bigint UNSIGNED DEFAULT NULL,
-  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `latitude` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `longitude` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_default` tinyint NOT NULL DEFAULT '0',
-  `is_published` tinyint NOT NULL DEFAULT '1',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `banner` bigint(20) UNSIGNED DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `latitude` varchar(191) DEFAULT NULL,
+  `longitude` varchar(191) DEFAULT NULL,
+  `is_default` tinyint(4) NOT NULL DEFAULT 0,
+  `is_published` tinyint(4) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -2560,15 +2616,15 @@ INSERT INTO `locations` (`id`, `name`, `banner`, `address`, `latitude`, `longitu
 --
 
 CREATE TABLE `logistics` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `thumbnail_image` bigint UNSIGNED DEFAULT NULL,
-  `is_published` tinyint NOT NULL DEFAULT '0',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `slug` varchar(191) NOT NULL,
+  `thumbnail_image` bigint(20) UNSIGNED DEFAULT NULL,
+  `is_published` tinyint(4) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `is_active` tinyint(1) DEFAULT '1'
+  `is_active` tinyint(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -2578,13 +2634,13 @@ CREATE TABLE `logistics` (
 --
 
 CREATE TABLE `logistic_zones` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `logistic_id` bigint UNSIGNED NOT NULL,
-  `standard_delivery_charge` double NOT NULL DEFAULT '0',
-  `express_delivery_charge` double NOT NULL DEFAULT '0',
-  `standard_delivery_time` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '1 - 3 days',
-  `express_delivery_time` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '1 day',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) DEFAULT NULL,
+  `logistic_id` bigint(20) UNSIGNED NOT NULL,
+  `standard_delivery_charge` double NOT NULL DEFAULT 0,
+  `express_delivery_charge` double NOT NULL DEFAULT 0,
+  `standard_delivery_time` varchar(191) DEFAULT NULL COMMENT '1 - 3 days',
+  `express_delivery_time` varchar(191) DEFAULT NULL COMMENT '1 day',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -2597,10 +2653,10 @@ CREATE TABLE `logistic_zones` (
 --
 
 CREATE TABLE `logistic_zone_cities` (
-  `id` bigint UNSIGNED NOT NULL,
-  `logistic_id` bigint UNSIGNED NOT NULL,
-  `logistic_zone_id` bigint UNSIGNED NOT NULL,
-  `city_id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `logistic_id` bigint(20) UNSIGNED NOT NULL,
+  `logistic_zone_id` bigint(20) UNSIGNED NOT NULL,
+  `city_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -2613,13 +2669,13 @@ CREATE TABLE `logistic_zone_cities` (
 --
 
 CREATE TABLE `media_managers` (
-  `id` bigint UNSIGNED NOT NULL,
-  `user_id` bigint UNSIGNED DEFAULT NULL,
-  `media_file` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `media_size` int DEFAULT NULL,
-  `media_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'video / image / pdf / ...',
-  `media_name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `media_extension` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `media_file` longtext DEFAULT NULL,
+  `media_size` int(11) DEFAULT NULL,
+  `media_type` varchar(191) DEFAULT NULL COMMENT 'video / image / pdf / ...',
+  `media_name` text DEFAULT NULL,
+  `media_extension` varchar(191) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -2646,7 +2702,10 @@ INSERT INTO `media_managers` (`id`, `user_id`, `media_file`, `media_size`, `medi
 (40, 1, 'uploads/media/izhWHr6bWc5QcSKtYBTdtnNfn2VgnT2IgIU5AbDg.jpg', 75217, 'image', 'iti.jpg', 'jpg', '2024-03-21 03:52:07', '2024-03-21 03:52:07', NULL),
 (47, 1, 'uploads/media/alUtDWODw6oIuuHVEwVUlgAaPS0M25HvlmHHhzw3.png', 19150, 'image', 'Coupons_v7.png', 'png', '2024-03-21 05:02:58', '2024-03-21 05:02:58', NULL),
 (48, 1, 'uploads/media/S9f8EtenLduljOjRQpsO4OkPhMXPxRf6dotxXFQu.png', 19185, 'image', 'Coupons_v8.png', 'png', '2024-03-21 05:06:15', '2024-03-21 05:06:15', NULL),
-(50, 1, 'uploads/media/P7ZdyBFyJp4nsUB6AVL4tghRKsR7D3m8ajCPZYtu.jpg', 161811, 'image', 'about_us_img.jpg', 'jpg', '2024-05-02 23:19:58', '2024-05-02 23:19:58', NULL);
+(50, 1, 'uploads/media/P7ZdyBFyJp4nsUB6AVL4tghRKsR7D3m8ajCPZYtu.jpg', 161811, 'image', 'about_us_img.jpg', 'jpg', '2024-05-02 23:19:58', '2024-05-02 23:19:58', NULL),
+(51, 1, 'uploads/media/nyPBQocYKjxjMuc4GxGBOGRr6LhePFO05LmqQJQY.png', 538534, 'image', 'Product-Image-dummy.png', 'png', '2024-05-11 06:43:40', '2024-05-11 06:43:40', NULL),
+(52, 1, 'uploads/media/tR2Vw9Q99imVM0zJq4SwkQYanZxg7EOb9OMrdGwU.png', 3237, 'image', 'base_category_fashion_logo.png', 'png', '2024-05-11 06:46:35', '2024-05-11 06:46:35', NULL),
+(53, 1, 'uploads/media/mazXSBM4vFlmrWFgy7w8LpCTWQs8duucGXcse4Az.png', 160818, 'image', 'Product-Brand-Image-dummy.png', 'png', '2024-05-11 07:19:00', '2024-05-11 07:19:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -2655,9 +2714,9 @@ INSERT INTO `media_managers` (`id`, `user_id`, `media_file`, `media_size`, `medi
 --
 
 CREATE TABLE `migrations` (
-  `id` int UNSIGNED NOT NULL,
-  `migration` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int NOT NULL
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(191) NOT NULL,
+  `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -2773,9 +2832,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `model_has_permissions` (
-  `permission_id` bigint UNSIGNED NOT NULL,
-  `model_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `model_id` bigint UNSIGNED NOT NULL
+  `permission_id` bigint(20) UNSIGNED NOT NULL,
+  `model_type` varchar(191) NOT NULL,
+  `model_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -2785,9 +2844,9 @@ CREATE TABLE `model_has_permissions` (
 --
 
 CREATE TABLE `model_has_roles` (
-  `role_id` bigint UNSIGNED NOT NULL,
-  `model_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `model_id` bigint UNSIGNED NOT NULL
+  `role_id` bigint(20) UNSIGNED NOT NULL,
+  `model_type` varchar(191) NOT NULL,
+  `model_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -2807,11 +2866,11 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 --
 
 CREATE TABLE `notifications` (
-  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `notifiable_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `notifiable_id` bigint UNSIGNED NOT NULL,
-  `data` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` char(36) NOT NULL,
+  `type` varchar(191) NOT NULL,
+  `notifiable_type` varchar(191) NOT NULL,
+  `notifiable_id` bigint(20) UNSIGNED NOT NULL,
+  `data` text NOT NULL,
   `read_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -2824,32 +2883,32 @@ CREATE TABLE `notifications` (
 --
 
 CREATE TABLE `orders` (
-  `id` bigint UNSIGNED NOT NULL,
-  `order_group_id` bigint UNSIGNED NOT NULL,
-  `shop_id` bigint UNSIGNED DEFAULT NULL,
-  `deliveryman_id` bigint UNSIGNED DEFAULT NULL,
-  `user_id` bigint UNSIGNED DEFAULT NULL,
-  `guest_user_id` int DEFAULT NULL,
-  `location_id` bigint UNSIGNED DEFAULT NULL,
-  `delivery_status` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'order_placed',
-  `payment_status` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'unpaid',
-  `applied_coupon_code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `coupon_discount_amount` double NOT NULL DEFAULT '0',
-  `admin_earning_percentage` double NOT NULL DEFAULT '0' COMMENT 'how much in percentage seller will pay to admin for each sell',
-  `total_admin_earnings` double NOT NULL DEFAULT '0',
-  `total_vendor_earnings` double NOT NULL DEFAULT '0',
-  `logistic_id` bigint UNSIGNED DEFAULT NULL,
-  `logistic_name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `pickup_or_delivery` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'delivery',
-  `shipping_delivery_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'regular' COMMENT 'regular/scheduled',
-  `scheduled_delivery_info` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT 'keep date & time',
-  `pickup_hub_id` int DEFAULT NULL,
-  `shipping_cost` double NOT NULL DEFAULT '0',
-  `tips_amount` double NOT NULL DEFAULT '0',
-  `reward_points` bigint NOT NULL DEFAULT '0',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `order_group_id` bigint(20) UNSIGNED NOT NULL,
+  `shop_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `deliveryman_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `guest_user_id` int(11) DEFAULT NULL,
+  `location_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `delivery_status` varchar(191) NOT NULL DEFAULT 'order_placed',
+  `payment_status` varchar(191) NOT NULL DEFAULT 'unpaid',
+  `applied_coupon_code` varchar(191) DEFAULT NULL,
+  `coupon_discount_amount` double NOT NULL DEFAULT 0,
+  `admin_earning_percentage` double NOT NULL DEFAULT 0 COMMENT 'how much in percentage seller will pay to admin for each sell',
+  `total_admin_earnings` double NOT NULL DEFAULT 0,
+  `total_vendor_earnings` double NOT NULL DEFAULT 0,
+  `logistic_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `logistic_name` varchar(191) DEFAULT NULL,
+  `pickup_or_delivery` varchar(191) NOT NULL DEFAULT 'delivery',
+  `shipping_delivery_type` varchar(191) NOT NULL DEFAULT 'regular' COMMENT 'regular/scheduled',
+  `scheduled_delivery_info` longtext DEFAULT NULL COMMENT 'keep date & time',
+  `pickup_hub_id` int(11) DEFAULT NULL,
+  `shipping_cost` double NOT NULL DEFAULT 0,
+  `tips_amount` double NOT NULL DEFAULT 0,
+  `reward_points` bigint(20) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+  `note` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -2859,31 +2918,31 @@ CREATE TABLE `orders` (
 --
 
 CREATE TABLE `order_groups` (
-  `id` bigint UNSIGNED NOT NULL,
-  `user_id` bigint UNSIGNED DEFAULT NULL,
-  `guest_user_id` int DEFAULT NULL,
-  `order_code` bigint NOT NULL,
-  `shipping_address_id` int DEFAULT NULL,
-  `billing_address_id` int DEFAULT NULL,
-  `location_id` bigint UNSIGNED DEFAULT NULL,
-  `phone_no` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `alternative_phone_no` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `sub_total_amount` double NOT NULL DEFAULT '0',
-  `total_tax_amount` double NOT NULL DEFAULT '0',
-  `total_coupon_discount_amount` double NOT NULL DEFAULT '0',
-  `total_shipping_cost` double NOT NULL DEFAULT '0',
-  `grand_total_amount` double NOT NULL DEFAULT '0',
-  `payment_method` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'cash_on_delivery',
-  `payment_status` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'unpaid',
-  `payment_details` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `is_manual_payment` tinyint(1) NOT NULL DEFAULT '0',
-  `manual_payment_details` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `is_pos_order` tinyint NOT NULL DEFAULT '0',
-  `pos_order_address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `additional_discount_value` double NOT NULL DEFAULT '0',
-  `additional_discount_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'flat',
-  `total_discount_amount` double NOT NULL DEFAULT '0',
-  `total_tips_amount` double NOT NULL DEFAULT '0',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `guest_user_id` int(11) DEFAULT NULL,
+  `order_code` bigint(20) NOT NULL,
+  `shipping_address_id` int(11) DEFAULT NULL,
+  `billing_address_id` int(11) DEFAULT NULL,
+  `location_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `phone_no` varchar(191) DEFAULT NULL,
+  `alternative_phone_no` varchar(191) DEFAULT NULL,
+  `sub_total_amount` double NOT NULL DEFAULT 0,
+  `total_tax_amount` double NOT NULL DEFAULT 0,
+  `total_coupon_discount_amount` double NOT NULL DEFAULT 0,
+  `total_shipping_cost` double NOT NULL DEFAULT 0,
+  `grand_total_amount` double NOT NULL DEFAULT 0,
+  `payment_method` varchar(191) NOT NULL DEFAULT 'cash_on_delivery',
+  `payment_status` varchar(191) NOT NULL DEFAULT 'unpaid',
+  `payment_details` longtext DEFAULT NULL,
+  `is_manual_payment` tinyint(1) NOT NULL DEFAULT 0,
+  `manual_payment_details` longtext DEFAULT NULL,
+  `is_pos_order` tinyint(4) NOT NULL DEFAULT 0,
+  `pos_order_address` text DEFAULT NULL,
+  `additional_discount_value` double NOT NULL DEFAULT 0,
+  `additional_discount_type` varchar(191) NOT NULL DEFAULT 'flat',
+  `total_discount_amount` double NOT NULL DEFAULT 0,
+  `total_tips_amount` double NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -2896,16 +2955,16 @@ CREATE TABLE `order_groups` (
 --
 
 CREATE TABLE `order_items` (
-  `id` bigint UNSIGNED NOT NULL,
-  `order_id` bigint UNSIGNED NOT NULL,
-  `product_variation_id` bigint UNSIGNED NOT NULL,
-  `qty` int NOT NULL DEFAULT '1',
-  `location_id` bigint UNSIGNED DEFAULT NULL,
-  `unit_price` double NOT NULL DEFAULT '0',
-  `total_tax` double NOT NULL DEFAULT '0',
-  `total_price` double NOT NULL DEFAULT '0',
-  `reward_points` bigint NOT NULL DEFAULT '0',
-  `is_refunded` tinyint NOT NULL DEFAULT '0',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `order_id` bigint(20) UNSIGNED NOT NULL,
+  `product_variation_id` bigint(20) UNSIGNED NOT NULL,
+  `qty` int(11) NOT NULL DEFAULT 1,
+  `location_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `unit_price` double NOT NULL DEFAULT 0,
+  `total_tax` double NOT NULL DEFAULT 0,
+  `total_price` double NOT NULL DEFAULT 0,
+  `reward_points` bigint(20) NOT NULL DEFAULT 0,
+  `is_refunded` tinyint(4) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -2917,10 +2976,10 @@ CREATE TABLE `order_items` (
 --
 
 CREATE TABLE `order_updates` (
-  `id` bigint UNSIGNED NOT NULL,
-  `order_id` bigint UNSIGNED NOT NULL,
-  `user_id` bigint UNSIGNED NOT NULL,
-  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `order_id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `note` text NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -2933,13 +2992,13 @@ CREATE TABLE `order_updates` (
 --
 
 CREATE TABLE `pages` (
-  `id` bigint UNSIGNED NOT NULL,
-  `title` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `meta_title` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `meta_image` bigint UNSIGNED DEFAULT NULL,
-  `meta_description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(191) NOT NULL,
+  `slug` varchar(191) NOT NULL,
+  `content` longtext DEFAULT NULL,
+  `meta_title` mediumtext DEFAULT NULL,
+  `meta_image` bigint(20) UNSIGNED DEFAULT NULL,
+  `meta_description` longtext DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -2959,11 +3018,11 @@ INSERT INTO `pages` (`id`, `title`, `slug`, `content`, `meta_title`, `meta_image
 --
 
 CREATE TABLE `page_localizations` (
-  `id` bigint UNSIGNED NOT NULL,
-  `page_id` bigint UNSIGNED NOT NULL,
-  `title` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `lang_key` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `page_id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(191) NOT NULL,
+  `content` longtext DEFAULT NULL,
+  `lang_key` varchar(191) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -2983,8 +3042,8 @@ INSERT INTO `page_localizations` (`id`, `page_id`, `title`, `content`, `lang_key
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) NOT NULL,
+  `token` varchar(191) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -2995,18 +3054,18 @@ CREATE TABLE `password_resets` (
 --
 
 CREATE TABLE `payment_gateways` (
-  `id` bigint UNSIGNED NOT NULL,
-  `gateway` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_recurring` tinyint(1) DEFAULT '0',
-  `webhook_id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `sandbox` tinyint(1) DEFAULT '0',
-  `type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'sandbox, live',
-  `is_active` tinyint DEFAULT '0',
-  `is_show` tinyint DEFAULT '1',
-  `is_virtual` tinyint DEFAULT '1',
-  `service_charge` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '0',
-  `charge_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '1= flat, 2=percentage',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `gateway` varchar(191) NOT NULL,
+  `image` varchar(191) DEFAULT NULL,
+  `is_recurring` tinyint(1) DEFAULT 0,
+  `webhook_id` varchar(191) DEFAULT NULL,
+  `sandbox` tinyint(1) DEFAULT 0,
+  `type` varchar(191) DEFAULT NULL COMMENT 'sandbox, live',
+  `is_active` tinyint(4) DEFAULT 0,
+  `is_show` tinyint(4) DEFAULT 1,
+  `is_virtual` tinyint(4) DEFAULT 1,
+  `service_charge` varchar(191) DEFAULT '0',
+  `charge_type` varchar(191) DEFAULT NULL COMMENT '1= flat, 2=percentage',
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -3031,10 +3090,10 @@ INSERT INTO `payment_gateways` (`id`, `gateway`, `image`, `is_recurring`, `webho
 --
 
 CREATE TABLE `payment_gateway_details` (
-  `id` bigint UNSIGNED NOT NULL,
-  `payment_gateway_id` bigint NOT NULL,
-  `key` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `value` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `payment_gateway_id` bigint(20) NOT NULL,
+  `key` varchar(191) DEFAULT NULL,
+  `value` varchar(191) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -3088,12 +3147,12 @@ INSERT INTO `payment_gateway_details` (`id`, `payment_gateway_id`, `key`, `value
 --
 
 CREATE TABLE `payouts` (
-  `id` bigint UNSIGNED NOT NULL,
-  `user_id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
   `amount` decimal(12,2) NOT NULL,
-  `instruction` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` enum('pending','accepted','rejected') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `instruction` text NOT NULL,
+  `status` enum('pending','accepted','rejected') NOT NULL,
+  `note` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -3105,13 +3164,13 @@ CREATE TABLE `payouts` (
 --
 
 CREATE TABLE `payrolls` (
-  `id` bigint UNSIGNED NOT NULL,
-  `user_id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
   `basic_salary` decimal(12,2) NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `month` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bonus` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `deduct` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `month` varchar(191) NOT NULL,
+  `bonus` text DEFAULT NULL,
+  `deduct` text DEFAULT NULL,
   `total_allownce` decimal(12,2) NOT NULL,
   `total_deduction` decimal(12,2) NOT NULL,
   `total_salary` decimal(12,2) NOT NULL,
@@ -3126,10 +3185,10 @@ CREATE TABLE `payrolls` (
 --
 
 CREATE TABLE `permissions` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `group_name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `guard_name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `group_name` varchar(191) NOT NULL,
+  `guard_name` varchar(191) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -3288,12 +3347,12 @@ INSERT INTO `permissions` (`id`, `name`, `group_name`, `guard_name`, `created_at
 --
 
 CREATE TABLE `personal_access_tokens` (
-  `id` bigint UNSIGNED NOT NULL,
-  `tokenable_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tokenable_id` bigint UNSIGNED NOT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `tokenable_type` varchar(191) NOT NULL,
+  `tokenable_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `abilities` text DEFAULT NULL,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -3306,11 +3365,11 @@ CREATE TABLE `personal_access_tokens` (
 --
 
 CREATE TABLE `priorities` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_active` tinyint(1) DEFAULT '1',
-  `user_id` int DEFAULT NULL,
-  `color` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `is_active` tinyint(1) DEFAULT 1,
+  `user_id` int(11) DEFAULT NULL,
+  `color` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -3330,48 +3389,48 @@ INSERT INTO `priorities` (`id`, `name`, `is_active`, `user_id`, `color`, `create
 --
 
 CREATE TABLE `products` (
-  `id` bigint UNSIGNED NOT NULL,
-  `shop_id` bigint UNSIGNED DEFAULT NULL,
-  `added_by` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'admin',
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `brand_id` bigint UNSIGNED DEFAULT NULL,
-  `unit_id` bigint UNSIGNED DEFAULT NULL,
-  `thumbnail_image` bigint UNSIGNED DEFAULT NULL,
-  `gallery_images` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `product_tags` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `short_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `price` double NOT NULL DEFAULT '0',
-  `min_price` double NOT NULL DEFAULT '0',
-  `max_price` double NOT NULL DEFAULT '0',
-  `discount_value` double NOT NULL DEFAULT '0',
-  `discount_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `discount_start_date` int DEFAULT NULL,
-  `discount_end_date` int DEFAULT NULL,
-  `sell_target` int DEFAULT NULL,
-  `stock_qty` int NOT NULL DEFAULT '0',
-  `is_published` tinyint NOT NULL DEFAULT '0',
-  `is_featured` tinyint NOT NULL DEFAULT '0',
-  `min_purchase_qty` int NOT NULL DEFAULT '1',
-  `max_purchase_qty` int NOT NULL DEFAULT '1',
-  `has_variation` tinyint NOT NULL DEFAULT '1',
-  `has_warranty` tinyint NOT NULL DEFAULT '1',
-  `total_sale_count` double NOT NULL DEFAULT '0',
-  `standard_delivery_hours` int NOT NULL DEFAULT '24',
-  `express_delivery_hours` int NOT NULL DEFAULT '24',
-  `size_guide` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `meta_title` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `meta_description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `meta_img` bigint UNSIGNED DEFAULT NULL,
-  `reward_points` bigint NOT NULL DEFAULT '0',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `shop_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `added_by` varchar(191) NOT NULL DEFAULT 'admin',
+  `name` varchar(191) NOT NULL,
+  `slug` varchar(191) NOT NULL,
+  `brand_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `unit_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `thumbnail_image` bigint(20) UNSIGNED DEFAULT NULL,
+  `gallery_images` longtext DEFAULT NULL,
+  `product_tags` longtext DEFAULT NULL,
+  `short_description` text DEFAULT NULL,
+  `description` longtext DEFAULT NULL,
+  `price` double NOT NULL DEFAULT 0,
+  `min_price` double NOT NULL DEFAULT 0,
+  `max_price` double NOT NULL DEFAULT 0,
+  `discount_value` double NOT NULL DEFAULT 0,
+  `discount_type` varchar(191) DEFAULT NULL,
+  `discount_start_date` int(11) DEFAULT NULL,
+  `discount_end_date` int(11) DEFAULT NULL,
+  `sell_target` int(11) DEFAULT NULL,
+  `stock_qty` int(11) NOT NULL DEFAULT 0,
+  `is_published` tinyint(4) NOT NULL DEFAULT 0,
+  `is_featured` tinyint(4) NOT NULL DEFAULT 0,
+  `min_purchase_qty` int(11) NOT NULL DEFAULT 1,
+  `max_purchase_qty` int(11) NOT NULL DEFAULT 1,
+  `has_variation` tinyint(4) NOT NULL DEFAULT 1,
+  `has_warranty` tinyint(4) NOT NULL DEFAULT 1,
+  `total_sale_count` double NOT NULL DEFAULT 0,
+  `standard_delivery_hours` int(11) NOT NULL DEFAULT 24,
+  `express_delivery_hours` int(11) NOT NULL DEFAULT 24,
+  `size_guide` text DEFAULT NULL,
+  `meta_title` mediumtext DEFAULT NULL,
+  `meta_description` longtext DEFAULT NULL,
+  `meta_img` bigint(20) UNSIGNED DEFAULT NULL,
+  `reward_points` bigint(20) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `vedio_link` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `created_by` int DEFAULT NULL,
-  `updated_by` int DEFAULT NULL,
-  `is_import` int DEFAULT '0'
+  `vedio_link` text DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `is_import` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -3379,15 +3438,9 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `shop_id`, `added_by`, `name`, `slug`, `brand_id`, `unit_id`, `thumbnail_image`, `gallery_images`, `product_tags`, `short_description`, `description`, `price`, `min_price`, `max_price`, `discount_value`, `discount_type`, `discount_start_date`, `discount_end_date`, `sell_target`, `stock_qty`, `is_published`, `is_featured`, `min_purchase_qty`, `max_purchase_qty`, `has_variation`, `has_warranty`, `total_sale_count`, `standard_delivery_hours`, `express_delivery_hours`, `size_guide`, `meta_title`, `meta_description`, `meta_img`, `reward_points`, `created_at`, `updated_at`, `deleted_at`, `vedio_link`, `created_by`, `updated_by`, `is_import`) VALUES
-(1, 1, 'admin', 'Mixio TNW A200 Gimbal Face Tracking', 'mixio-tnw-a200-gimbal-face-tracking-6if91', 8, 1, NULL, '35,34,33,38,37,36', NULL, 'Fitur:\r\nPelacakan Pengenalan Wajah Cerdas 360°\r\nPengenalan Gerakan Cerdas\r\nPemotretan Horizontal Dan Vertikal 360° Dudukan Ponsel,Pemotretan Depan Dan Belakang 180°\r\nLensa Dapat Disesuaikan Atas Dan Bawah Untuk Pemotretan Mudah\r\nDapat Digunakan Dengan Tripod Dengan Antarmuka 1/4 Nut', '<h6><span style=\"font-family: &quot;Open Sauce One&quot;, sans-serif; background-color: rgb(255, 255, 255);\"><b style=\"\"><font color=\"#424242\">Fitur:</font></b></span></h6><ul><li><span style=\"font-family: &quot;Open Sauce One&quot;, sans-serif; background-color: rgb(255, 255, 255); font-size: 12px;\"><font color=\"#424242\">Pelacakan Pengenalan Wajah Cerdas 360°</font></span></li><li><span style=\"font-family: &quot;Open Sauce One&quot;, sans-serif; background-color: rgb(255, 255, 255); font-size: 12px;\"><font color=\"#424242\">Pengenalan Gerakan Cerdas</font></span></li><li><span style=\"font-family: &quot;Open Sauce One&quot;, sans-serif; background-color: rgb(255, 255, 255); font-size: 12px;\"><font color=\"#424242\">Pemotretan Horizontal Dan Vertikal 360° Dudukan Ponsel,Pemotretan Depan Dan Belakang 180°</font></span></li><li><span style=\"font-family: &quot;Open Sauce One&quot;, sans-serif; background-color: rgb(255, 255, 255); font-size: 12px;\"><font color=\"#424242\">Lensa Dapat Disesuaikan Atas Dan Bawah Untuk Pemotretan Mudah</font></span></li><li><span style=\"font-family: &quot;Open Sauce One&quot;, sans-serif; background-color: rgb(255, 255, 255); font-size: 12px;\"><font color=\"#424242\">Dapat Digunakan Dengan Tripod Dengan Antarmuka 1/4 Nut</font></span></li></ul><h6><span style=\"font-family: &quot;Open Sauce One&quot;, sans-serif; background-color: rgb(255, 255, 255);\"><b><font color=\"#424242\"><br></font></b></span></h6><h6><span style=\"font-family: &quot;Open Sauce One&quot;, sans-serif; background-color: rgb(255, 255, 255);\"><b><font color=\"#424242\">Spesifikasi:</font></b></span></h6><ul><li><font color=\"#424242\">Nama Produk: A200 Auto Face Tracking</font></li><li><span style=\"font-family: &quot;Open Sauce One&quot;, sans-serif; font-size: var(--bs-body-font-size); font-weight: var(--bs-body-font-weight); text-align: var(--bs-body-text-align);\"><font color=\"#424242\">Available phone size: 4.7-7 inches</font></span></li><li><font color=\"#424242\">Kapasitas baterai: 1800mah</font></li><li><font color=\"#424242\">Main material: ABS plastic</font></li><li><font color=\"#424242\">Battery capacity: 1800mAh</font></li><li><font color=\"#424242\">Working hours: 10 hours</font></li><li><font color=\"#424242\">Battery capacity(Fill light): 55mAh</font></li><li><font color=\"#424242\">Working hours(Fill light): 3 hours</font></li><li><font color=\"#424242\">Product size: 59*65*180mm</font></li><li><font color=\"#424242\">Net Weight: 240g (Includes base)</font></li><li><font color=\"#424242\">Face tracking distance: 1-3m</font></li><li><font color=\"#424242\">Working current: 120mA~800mA</font></li><li><font color=\"#424242\">Working voltage: 3.7V</font></li><li><font color=\"#424242\">Charging voltage: DC 5V 2A</font></li><li><font color=\"#424242\">Power: 3W</font></li><li><font color=\"#424242\">Charging voltage: DC 5V</font></li></ul><p><h6><font color=\"#424242\"><span style=\"font-family: &quot;Open Sauce One&quot;, sans-serif; background-color: rgb(255, 255, 255);\"><b><br></b></span></font></h6><h6><font color=\"#424242\"><span style=\"font-family: &quot;Open Sauce One&quot;, sans-serif; background-color: rgb(255, 255, 255);\"><b>Paket berisi:</b></span></font></h6><font color=\"#424242\"><span style=\"font-family: &quot;Open Sauce One&quot;, sans-serif; background-color: rgb(255, 255, 255);\">1X Auto Face tracking A200</span><br style=\"font-family: &quot;Open Sauce One&quot;, sans-serif; background-color: rgb(255, 255, 255);\"><span style=\"font-family: &quot;Open Sauce One&quot;, sans-serif; background-color: rgb(255, 255, 255);\">1X kabel pengisian daya</span><br style=\"font-family: &quot;Open Sauce One&quot;, sans-serif; background-color: rgb(255, 255, 255);\"><span style=\"font-family: &quot;Open Sauce One&quot;, sans-serif; background-color: rgb(255, 255, 255);\">1X dasar</span><br style=\"font-family: &quot;Open Sauce One&quot;, sans-serif; background-color: rgb(255, 255, 255);\"><span style=\"font-family: &quot;Open Sauce One&quot;, sans-serif; background-color: rgb(255, 255, 255);\">1X Instruksi MANUAL BOOK</span></font><br></p>', 0, 7.9669340369729, 7.9669340369729, 12, 'percent', 1714521600, 1715385600, 98, 980, 1, 0, 1, 10, 0, 1, 0, 72, 24, NULL, 'Mixio TNW A200 Gimbal Face Tracking', 'Spesifikasi:\r\nNama Produk: A200 Auto Face Tracking\r\nAvailable phone size: 4.7-7 inches\r\nKapasitas baterai: 1800mah\r\nMain material: ABS plastic\r\nBattery capacity: 1800mAh\r\nWorking hours: 10 hours\r\nBattery capacity(Fill light): 55mAh\r\nWorking hours(Fill light): 3 hours\r\nProduct size: 59*65*180mm\r\nNet Weight: 240g (Includes base)\r\nFace tracking distance: 1-3m\r\nWorking current: 120mA~800mA\r\nWorking voltage: 3.7V\r\nCharging voltage: DC 5V 2A\r\nPower: 3W\r\nCharging voltage: DC 5V\r\n\r\nPaket berisi:\r\n1X Auto Face tracking A200\r\n1X kabel pengisian daya\r\n1X dasar\r\n1X Instruksi MANUAL BOOK', NULL, 0, '2024-03-20 10:48:09', '2024-05-11 05:05:34', '2024-05-11 05:05:34', NULL, NULL, NULL, 0),
-(2, 1, 'admin', 'Dini', 'dini-bozuu', 7, 1, NULL, '35', NULL, 'nope :)', NULL, 0, 2.8680962533103, 2.8680962533103, 0, 'percent', NULL, NULL, NULL, 120, 1, 0, 1, 10, 0, 1, 0, 72, 24, NULL, NULL, NULL, NULL, 0, '2024-03-20 13:37:03', '2024-03-21 01:59:40', '2024-03-21 01:59:40', NULL, NULL, NULL, 0),
-(3, 1, 'admin', 'Serpong Branch', 'serpong-branch-aiiug', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 125000, 125000, 0, 'percent', NULL, NULL, NULL, 100, 1, 0, 1, 10, 0, 1, 0, 72, 24, NULL, NULL, NULL, NULL, 0, '2024-03-20 13:46:50', '2024-03-21 01:59:48', '2024-03-21 01:59:48', NULL, NULL, NULL, 0),
-(4, 1, 'admin', 'YY', 'yy-0hywy', 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 45000, 45000, 0, 'percent', NULL, NULL, NULL, 125, 1, 0, 1, 10, 0, 1, 0, 72, 24, NULL, NULL, NULL, NULL, 0, '2024-03-20 13:50:00', '2024-03-20 13:52:37', '2024-03-20 13:52:37', NULL, NULL, NULL, 0),
-(5, 1, 'admin', 'YY', 'yy-pd1vp', 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 45000, 45000, 0, 'percent', NULL, NULL, NULL, 125, 1, 0, 1, 10, 0, 1, 0, 72, 24, NULL, NULL, NULL, NULL, 0, '2024-03-20 13:50:01', '2024-03-20 13:52:30', '2024-03-20 13:52:30', NULL, NULL, NULL, 0),
-(6, 1, 'admin', 'Antan', 'antan-norl6', 4, 1, NULL, NULL, NULL, NULL, NULL, 0, 35.086439959592, 550500.98, 0, 'percent', NULL, NULL, NULL, 1, 1, 0, 1, 10, 0, 1, 0, 72, 24, NULL, NULL, NULL, NULL, 0, '2024-03-20 23:34:36', '2024-03-21 02:00:02', '2024-03-21 02:00:02', NULL, NULL, NULL, 0),
-(7, 1, 'admin', 'Jkt', 'jkt-imoo7', 7, 2, NULL, NULL, NULL, NULL, NULL, 0, 3.1867736147892, 3.1867736147892, 0, 'percent', NULL, NULL, NULL, 100, 1, 0, 1, 10, 0, 1, 0, 72, 24, NULL, NULL, NULL, NULL, 0, '2024-03-21 01:53:44', '2024-05-11 05:05:28', '2024-05-11 05:05:28', NULL, NULL, NULL, 0),
-(8, 1, 'admin', 'Bnd', 'bnd-i1yse', 6, 1, NULL, NULL, NULL, NULL, NULL, 0, 1.9439637727575, 1.9439637727575, 0, 'percent', NULL, NULL, NULL, 100, 1, 0, 1, 10, 0, 1, 0, 72, 24, NULL, NULL, NULL, NULL, 0, '2024-03-21 01:56:55', '2024-03-21 02:00:10', '2024-03-21 02:00:10', NULL, NULL, NULL, 0),
-(9, 1, 'admin', 'TESLA', 'tesla-lktab', 3, 1, NULL, NULL, NULL, NULL, NULL, 0, 76.48256675494, 76.48256675494, 90, 'percent', 1710892800, 1714435200, NULL, 1200, 1, 0, 1, 10, 0, 1, 0, 72, 24, NULL, NULL, NULL, NULL, 0, '2024-03-21 02:30:04', '2024-05-11 05:05:22', '2024-05-11 05:05:22', NULL, NULL, NULL, 0);
+(10, 1, 'admin', 'Broodis Kemeja Formal Pria Polos Grey Cotton Oxford Slimfit Lengan Pendek', 'broodis-kemeja-formal-pria-polos-grey-cotton-oxford-slimfit-lengan-pendek-uvetj', 12, 8, 51, NULL, NULL, 'Merek: BROODIS\r\nGaris Leher: Collar \r\nBahan: Katun Motif: Polos \r\nPanjang Lengan: Lengan Pendek \r\nAcara: Kasual Stok: 27 \r\nDikirim Dari: KOTA TANGERANG SELATAN', '<p><span style=\"font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve;\"><font color=\"#000000\" style=\"\">Details :\r\n• Fabric: Cotton Oxford\r\n• Slim Fit\r\n\r\nShort\r\nS : Panjang badan 70cm x Lebar badan 52cm x Panjang tangan 25cm\r\nM : Panjang badan 72cm x Lebar badan 54cm x Panjang tangan 25cm\r\nL : Panjang badan 74cm x Lebar badan 56cm x Panjang tangan 26cm\r\nXL : Panjang badan 78cm x Lebar badan 60cm x Panjang tangan 27cm\r\nXXL : Panjang badan 80cm x Lebar badan 64cm x Panjang tangan 28cm\r\n\r\nReferensi Size\r\n\r\nSmall : 152cm – 165cm // 50kg – 60kg\r\nMedium : 166cm – 175cm // 61kg – 70kg\r\nLarge : 176cm – 185cm // 71kg – 78kg\r\nXLarge : 186cm – 190cm // 79kg – 85\r\n\r\n\r\nKebijakan Pengembalian Produk\r\n\r\nProduk dapat ditukar maksimal 3 (tiga) hari setelah barang diterima selama hangtag label masih terpasang.\r\nGRATIS ONGKIR untuk penukaran barang yang terjadi karena kesalahan dari pihak kami. \r\n\r\nJadwal Pengiriman\r\n\r\nSenin – Jumat : Pembayaran maksimal jam 16.00 akan diproses dihari yg sama. Selebihnya akan diproses keesokan harinya.\r\nSabtu - Minggu : Pembayaran maksimal jam 13.00 akan diproses dihari yg sama. Selebihnya akan diproses keesokan harinya.\r\nTanggal Merah / Hari Libur Nasional : CS dan PENGIRIMAN OFF\r\n\r\nCatatan Lainnya\r\n\r\n**Warna yang terlihat pada gambar mungkin tidak 100% sama dengan produk yang sebenarnya, dikarenakan faktor lightning pada proses photoshoot, atau kondisi gadget yang digunakan untuk melihat gambar.\r\n**Untuk pembelian Online, mohon pertimbangkan toleransi selisih perbedaan warna dan size, apabila setelah barang diterima perbedaan dianggap terlalu signifikan, silahkan ajukan penukaran barang atau pengembalian dana.\r\n\r\nUlasan Produk</font></span><br></p>', 0, 7.648256675494, 7.648256675494, 25, 'percent', 1716681600, 1719705600, NULL, 888, 1, 0, 1, 10, 0, 1, 0, 72, 24, NULL, NULL, NULL, NULL, 0, '2024-05-11 07:44:42', '2024-05-11 07:44:42', NULL, NULL, NULL, NULL, 0),
+(11, 1, 'admin', 'Broodis Kemeja Polos Hitam Cotton SOFTEE Black Lengan Panjang Slimfit', 'broodis-kemeja-polos-hitam-cotton-softee-black-lengan-panjang-slimfit-xfoac', 12, 8, 51, NULL, NULL, 'Merek: BROODIS\r\nGaris Leher: Collar\r\nBahan: Kain Kepar\r\nMotif: Polos\r\nPanjang Lengan: Lengan Panjang\r\nStok Diskon: 2389\r\nStok Lain: 183\r\nDikirim Dari: KOTA TANGERANG SELATAN', '<p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Details&nbsp;: </p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Fabric :</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">• Softee Series : Pique Polyester</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">• ⁠Relaxedfit</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">\r\n</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\"> Size&nbsp;Guide&nbsp;:&nbsp;</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">P.&nbsp;Badan&nbsp;Blkg&nbsp;x&nbsp;P.&nbsp;Badan&nbsp;Dpn&nbsp;x&nbsp;L.&nbsp;Badan&nbsp;x&nbsp;P.&nbsp;Lengan</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">S&nbsp;:&nbsp;73cm&nbsp;x&nbsp;70cm&nbsp;x&nbsp;52cm&nbsp;x&nbsp;59cm</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">M&nbsp;:&nbsp;75cm&nbsp;x&nbsp;72cm&nbsp;x&nbsp;54cm&nbsp;x&nbsp;60cm</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">L&nbsp;:&nbsp;77cm&nbsp;x&nbsp;74cm&nbsp;x&nbsp;56cm&nbsp;x&nbsp;61cm</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">XL&nbsp;:&nbsp;80cm&nbsp;x&nbsp;77cm&nbsp;x&nbsp;59cm&nbsp;x&nbsp;62cm</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">XXL&nbsp;:&nbsp;82cm&nbsp;x&nbsp;79cm&nbsp;x&nbsp;62cm&nbsp;x&nbsp;63cm</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">\r\n</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">\r\n</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Referensi&nbsp;Size</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Small&nbsp;:&nbsp;152cm&nbsp;–&nbsp;165cm&nbsp;//&nbsp;50kg&nbsp;–&nbsp;60kg</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Medium&nbsp;:&nbsp;166cm&nbsp;–&nbsp;175cm&nbsp;//&nbsp;61kg&nbsp;–&nbsp;70kg</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Large&nbsp;:&nbsp;176cm&nbsp;–&nbsp;185cm&nbsp;//&nbsp;71kg&nbsp;–&nbsp;78kg</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">XLarge&nbsp;:&nbsp;186cm&nbsp;–&nbsp;190cm&nbsp;//&nbsp;79kg&nbsp;–&nbsp;85</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">\r\n</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">\r\n</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Kebijakan&nbsp;Pengembalian&nbsp;Produk</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Produk&nbsp;dapat&nbsp;ditukar&nbsp;maksimal&nbsp;3&nbsp;(tiga)&nbsp;hari&nbsp;setelah&nbsp;barang&nbsp;diterima&nbsp;selama&nbsp;hangtag&nbsp;label&nbsp;masih&nbsp;terpasang.</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">GRATIS&nbsp;ONGKIR&nbsp;untuk&nbsp;penukaran&nbsp;barang&nbsp;yang&nbsp;terjadi&nbsp;karena&nbsp;kesalahan&nbsp;dari&nbsp;pihak&nbsp;kami.&nbsp;</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Jadwal&nbsp;Pengiriman</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Senin&nbsp;–&nbsp;Jumat&nbsp;:&nbsp;Pembayaran&nbsp;maksimal&nbsp;jam&nbsp;16.00&nbsp;akan&nbsp;diproses&nbsp;dihari&nbsp;yg&nbsp;sama.&nbsp;Selebihnya&nbsp;akan&nbsp;diproses&nbsp;keesokan&nbsp;harinya.</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Sabtu&nbsp;-&nbsp;Minggu&nbsp;:&nbsp;Pembayaran&nbsp;maksimal&nbsp;jam&nbsp;13.00&nbsp;akan&nbsp;diproses&nbsp;dihari&nbsp;yg&nbsp;sama.&nbsp;Selebihnya&nbsp;akan&nbsp;diproses&nbsp;keesokan&nbsp;harinya.</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Tanggal&nbsp;Merah&nbsp;/&nbsp;Hari&nbsp;Libur&nbsp;Nasional&nbsp;:&nbsp;CS&nbsp;dan&nbsp;PENGIRIMAN&nbsp;OFF</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Catatan&nbsp;Lainnya</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">**Warna&nbsp;yang&nbsp;terlihat&nbsp;pada&nbsp;gambar&nbsp;mungkin&nbsp;tidak&nbsp;100%&nbsp;sama&nbsp;dengan&nbsp;produk&nbsp;yang&nbsp;sebenarnya,&nbsp;dikarenakan&nbsp;faktor&nbsp;lightning&nbsp;pada&nbsp;proses&nbsp;photoshoot,&nbsp;atau&nbsp;kondisi&nbsp;gadget&nbsp;yang&nbsp;digunakan&nbsp;untuk&nbsp;melihat&nbsp;gambar.</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">**Untuk&nbsp;pembelian&nbsp;Online,&nbsp;mohon&nbsp;pertimbangkan&nbsp;toleransi&nbsp;selisih&nbsp;perbedaan&nbsp;warna&nbsp;dan&nbsp;size,&nbsp;apabila&nbsp;setelah&nbsp;barang&nbsp;diterima&nbsp;perbedaan&nbsp;dianggap&nbsp;terlalu&nbsp;signifikan,&nbsp;silahkan&nbsp;ajukan&nbsp;penukaran&nbsp;barang&nbsp;atau&nbsp;pengembalian&nbsp;dana.</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Ulasan&nbsp;Produk</p>', 0, 12.109739736199, 12.109739736199, 0, 'percent', NULL, NULL, NULL, 580, 1, 0, 1, 10, 0, 1, 0, 72, 24, NULL, NULL, NULL, NULL, 0, '2024-05-11 11:05:51', '2024-05-11 11:17:00', NULL, NULL, NULL, NULL, 0),
+(12, 1, 'admin', 'TEST', 'test-cyu84', 12, 8, 51, NULL, NULL, NULL, NULL, 0, 6.3735472295784, 6.3735472295784, 0, 'percent', NULL, NULL, NULL, 5, 1, 0, 1, 10, 0, 1, 0, 72, 24, NULL, NULL, NULL, NULL, 0, '2024-05-11 13:32:51', '2024-05-11 13:32:51', NULL, NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -3396,13 +3449,22 @@ INSERT INTO `products` (`id`, `shop_id`, `added_by`, `name`, `slug`, `brand_id`,
 --
 
 CREATE TABLE `product_categories` (
-  `id` bigint UNSIGNED NOT NULL,
-  `product_id` bigint UNSIGNED NOT NULL,
-  `category_id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` bigint(20) UNSIGNED NOT NULL,
+  `category_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `product_categories`
+--
+
+INSERT INTO `product_categories` (`id`, `product_id`, `category_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(11, 10, 11, NULL, NULL, NULL),
+(12, 11, 11, NULL, NULL, NULL),
+(13, 12, 11, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -3411,10 +3473,10 @@ CREATE TABLE `product_categories` (
 --
 
 CREATE TABLE `product_colors` (
-  `id` bigint UNSIGNED NOT NULL,
-  `product_id` bigint UNSIGNED NOT NULL,
-  `variation_value_id` bigint UNSIGNED NOT NULL,
-  `image` bigint UNSIGNED DEFAULT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` bigint(20) UNSIGNED NOT NULL,
+  `variation_value_id` bigint(20) UNSIGNED NOT NULL,
+  `image` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -3427,16 +3489,25 @@ CREATE TABLE `product_colors` (
 --
 
 CREATE TABLE `product_localizations` (
-  `id` bigint UNSIGNED NOT NULL,
-  `product_id` bigint UNSIGNED NOT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `short_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `lang_key` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) DEFAULT NULL,
+  `short_description` text DEFAULT NULL,
+  `description` longtext DEFAULT NULL,
+  `lang_key` varchar(191) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `product_localizations`
+--
+
+INSERT INTO `product_localizations` (`id`, `product_id`, `name`, `short_description`, `description`, `lang_key`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(10, 10, 'Broodis Kemeja Formal Pria Polos Grey Cotton Oxford Slimfit Lengan Pendek', 'Merek: BROODIS\r\nGaris Leher: Collar \r\nBahan: Katun Motif: Polos \r\nPanjang Lengan: Lengan Pendek \r\nAcara: Kasual Stok: 27 \r\nDikirim Dari: KOTA TANGERANG SELATAN', '<p><span style=\"font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve;\"><font color=\"#000000\" style=\"\">Details :\r\n• Fabric: Cotton Oxford\r\n• Slim Fit\r\n\r\nShort\r\nS : Panjang badan 70cm x Lebar badan 52cm x Panjang tangan 25cm\r\nM : Panjang badan 72cm x Lebar badan 54cm x Panjang tangan 25cm\r\nL : Panjang badan 74cm x Lebar badan 56cm x Panjang tangan 26cm\r\nXL : Panjang badan 78cm x Lebar badan 60cm x Panjang tangan 27cm\r\nXXL : Panjang badan 80cm x Lebar badan 64cm x Panjang tangan 28cm\r\n\r\nReferensi Size\r\n\r\nSmall : 152cm – 165cm // 50kg – 60kg\r\nMedium : 166cm – 175cm // 61kg – 70kg\r\nLarge : 176cm – 185cm // 71kg – 78kg\r\nXLarge : 186cm – 190cm // 79kg – 85\r\n\r\n\r\nKebijakan Pengembalian Produk\r\n\r\nProduk dapat ditukar maksimal 3 (tiga) hari setelah barang diterima selama hangtag label masih terpasang.\r\nGRATIS ONGKIR untuk penukaran barang yang terjadi karena kesalahan dari pihak kami. \r\n\r\nJadwal Pengiriman\r\n\r\nSenin – Jumat : Pembayaran maksimal jam 16.00 akan diproses dihari yg sama. Selebihnya akan diproses keesokan harinya.\r\nSabtu - Minggu : Pembayaran maksimal jam 13.00 akan diproses dihari yg sama. Selebihnya akan diproses keesokan harinya.\r\nTanggal Merah / Hari Libur Nasional : CS dan PENGIRIMAN OFF\r\n\r\nCatatan Lainnya\r\n\r\n**Warna yang terlihat pada gambar mungkin tidak 100% sama dengan produk yang sebenarnya, dikarenakan faktor lightning pada proses photoshoot, atau kondisi gadget yang digunakan untuk melihat gambar.\r\n**Untuk pembelian Online, mohon pertimbangkan toleransi selisih perbedaan warna dan size, apabila setelah barang diterima perbedaan dianggap terlalu signifikan, silahkan ajukan penukaran barang atau pengembalian dana.\r\n\r\nUlasan Produk</font></span><br></p>', 'en', '2024-05-11 07:44:42', '2024-05-11 10:41:18', NULL),
+(11, 11, 'Broodis Kemeja Polos Hitam Cotton SOFTEE Black Lengan Panjang Slimfit', 'Merek: BROODIS\r\nGaris Leher: Collar\r\nBahan: Kain Kepar\r\nMotif: Polos\r\nPanjang Lengan: Lengan Panjang\r\nStok Diskon: 2389\r\nStok Lain: 183\r\nDikirim Dari: KOTA TANGERANG SELATAN', '<p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Details&nbsp;: </p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Fabric :</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">• Softee Series : Pique Polyester</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">• ⁠Relaxedfit</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">\r\n</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\"> Size&nbsp;Guide&nbsp;:&nbsp;</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">P.&nbsp;Badan&nbsp;Blkg&nbsp;x&nbsp;P.&nbsp;Badan&nbsp;Dpn&nbsp;x&nbsp;L.&nbsp;Badan&nbsp;x&nbsp;P.&nbsp;Lengan</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">S&nbsp;:&nbsp;73cm&nbsp;x&nbsp;70cm&nbsp;x&nbsp;52cm&nbsp;x&nbsp;59cm</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">M&nbsp;:&nbsp;75cm&nbsp;x&nbsp;72cm&nbsp;x&nbsp;54cm&nbsp;x&nbsp;60cm</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">L&nbsp;:&nbsp;77cm&nbsp;x&nbsp;74cm&nbsp;x&nbsp;56cm&nbsp;x&nbsp;61cm</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">XL&nbsp;:&nbsp;80cm&nbsp;x&nbsp;77cm&nbsp;x&nbsp;59cm&nbsp;x&nbsp;62cm</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">XXL&nbsp;:&nbsp;82cm&nbsp;x&nbsp;79cm&nbsp;x&nbsp;62cm&nbsp;x&nbsp;63cm</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">\r\n</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">\r\n</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Referensi&nbsp;Size</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Small&nbsp;:&nbsp;152cm&nbsp;–&nbsp;165cm&nbsp;//&nbsp;50kg&nbsp;–&nbsp;60kg</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Medium&nbsp;:&nbsp;166cm&nbsp;–&nbsp;175cm&nbsp;//&nbsp;61kg&nbsp;–&nbsp;70kg</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Large&nbsp;:&nbsp;176cm&nbsp;–&nbsp;185cm&nbsp;//&nbsp;71kg&nbsp;–&nbsp;78kg</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">XLarge&nbsp;:&nbsp;186cm&nbsp;–&nbsp;190cm&nbsp;//&nbsp;79kg&nbsp;–&nbsp;85</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">\r\n</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">\r\n</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Kebijakan&nbsp;Pengembalian&nbsp;Produk</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Produk&nbsp;dapat&nbsp;ditukar&nbsp;maksimal&nbsp;3&nbsp;(tiga)&nbsp;hari&nbsp;setelah&nbsp;barang&nbsp;diterima&nbsp;selama&nbsp;hangtag&nbsp;label&nbsp;masih&nbsp;terpasang.</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">GRATIS&nbsp;ONGKIR&nbsp;untuk&nbsp;penukaran&nbsp;barang&nbsp;yang&nbsp;terjadi&nbsp;karena&nbsp;kesalahan&nbsp;dari&nbsp;pihak&nbsp;kami.&nbsp;</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Jadwal&nbsp;Pengiriman</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Senin&nbsp;–&nbsp;Jumat&nbsp;:&nbsp;Pembayaran&nbsp;maksimal&nbsp;jam&nbsp;16.00&nbsp;akan&nbsp;diproses&nbsp;dihari&nbsp;yg&nbsp;sama.&nbsp;Selebihnya&nbsp;akan&nbsp;diproses&nbsp;keesokan&nbsp;harinya.</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Sabtu&nbsp;-&nbsp;Minggu&nbsp;:&nbsp;Pembayaran&nbsp;maksimal&nbsp;jam&nbsp;13.00&nbsp;akan&nbsp;diproses&nbsp;dihari&nbsp;yg&nbsp;sama.&nbsp;Selebihnya&nbsp;akan&nbsp;diproses&nbsp;keesokan&nbsp;harinya.</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Tanggal&nbsp;Merah&nbsp;/&nbsp;Hari&nbsp;Libur&nbsp;Nasional&nbsp;:&nbsp;CS&nbsp;dan&nbsp;PENGIRIMAN&nbsp;OFF</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Catatan&nbsp;Lainnya</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">**Warna&nbsp;yang&nbsp;terlihat&nbsp;pada&nbsp;gambar&nbsp;mungkin&nbsp;tidak&nbsp;100%&nbsp;sama&nbsp;dengan&nbsp;produk&nbsp;yang&nbsp;sebenarnya,&nbsp;dikarenakan&nbsp;faktor&nbsp;lightning&nbsp;pada&nbsp;proses&nbsp;photoshoot,&nbsp;atau&nbsp;kondisi&nbsp;gadget&nbsp;yang&nbsp;digunakan&nbsp;untuk&nbsp;melihat&nbsp;gambar.</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">**Untuk&nbsp;pembelian&nbsp;Online,&nbsp;mohon&nbsp;pertimbangkan&nbsp;toleransi&nbsp;selisih&nbsp;perbedaan&nbsp;warna&nbsp;dan&nbsp;size,&nbsp;apabila&nbsp;setelah&nbsp;barang&nbsp;diterima&nbsp;perbedaan&nbsp;dianggap&nbsp;terlalu&nbsp;signifikan,&nbsp;silahkan&nbsp;ajukan&nbsp;penukaran&nbsp;barang&nbsp;atau&nbsp;pengembalian&nbsp;dana.</p><p class=\"QN2lPu\" style=\"box-sizing: border-box; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Ulasan&nbsp;Produk</p>', 'en', '2024-05-11 11:05:51', '2024-05-11 11:14:54', NULL),
+(12, 12, 'TEST', NULL, NULL, 'en', '2024-05-11 13:32:51', '2024-05-11 13:32:51', NULL);
 
 -- --------------------------------------------------------
 
@@ -3445,9 +3516,9 @@ CREATE TABLE `product_localizations` (
 --
 
 CREATE TABLE `product_tags` (
-  `id` bigint UNSIGNED NOT NULL,
-  `product_id` bigint UNSIGNED NOT NULL,
-  `tag_id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` bigint(20) UNSIGNED NOT NULL,
+  `tag_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -3460,11 +3531,11 @@ CREATE TABLE `product_tags` (
 --
 
 CREATE TABLE `product_taxes` (
-  `id` bigint UNSIGNED NOT NULL,
-  `product_id` bigint UNSIGNED NOT NULL,
-  `tax_id` bigint UNSIGNED NOT NULL,
-  `tax_value` double NOT NULL DEFAULT '0',
-  `tax_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'amount' COMMENT 'flat / percent',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` bigint(20) UNSIGNED NOT NULL,
+  `tax_id` bigint(20) UNSIGNED NOT NULL,
+  `tax_value` double NOT NULL DEFAULT 0,
+  `tax_type` varchar(191) NOT NULL DEFAULT 'amount' COMMENT 'flat / percent',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -3477,12 +3548,21 @@ CREATE TABLE `product_taxes` (
 --
 
 CREATE TABLE `product_themes` (
-  `id` bigint UNSIGNED NOT NULL,
-  `product_id` bigint UNSIGNED NOT NULL,
-  `theme_id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` bigint(20) UNSIGNED NOT NULL,
+  `theme_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `product_themes`
+--
+
+INSERT INTO `product_themes` (`id`, `product_id`, `theme_id`, `created_at`, `updated_at`) VALUES
+(11, 10, 1, NULL, NULL),
+(12, 11, 1, NULL, NULL),
+(13, 12, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -3491,12 +3571,12 @@ CREATE TABLE `product_themes` (
 --
 
 CREATE TABLE `product_variations` (
-  `id` bigint UNSIGNED NOT NULL,
-  `product_id` bigint UNSIGNED NOT NULL,
-  `variation_key` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `sku` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `price` double NOT NULL DEFAULT '0',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` bigint(20) UNSIGNED NOT NULL,
+  `variation_key` varchar(191) DEFAULT NULL,
+  `sku` varchar(191) DEFAULT NULL,
+  `code` varchar(191) DEFAULT NULL,
+  `price` double NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -3507,15 +3587,9 @@ CREATE TABLE `product_variations` (
 --
 
 INSERT INTO `product_variations` (`id`, `product_id`, `variation_key`, `sku`, `code`, `price`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, NULL, 'SKU00001', 'MXOTNW200GMB', 7.9669340369729, '2024-03-20 10:48:09', '2024-03-21 03:43:25', NULL),
-(2, 2, NULL, 'SKU00002', 'DiniLS', 2.8680962533103, '2024-03-20 13:37:03', '2024-03-20 15:16:00', NULL),
-(3, 3, NULL, 'SKU00003', 'T2', 125000, '2024-03-20 13:46:50', '2024-03-20 13:46:50', NULL),
-(4, 4, NULL, 'SKU00004', 'T3', 45000, '2024-03-20 13:50:00', '2024-03-20 13:50:00', NULL),
-(5, 5, NULL, 'SKU00004', 'T3', 45000, '2024-03-20 13:50:01', '2024-03-20 13:50:01', NULL),
-(6, 6, NULL, 'SKU00005', 'T5', 550500.98, '2024-03-20 23:34:36', '2024-03-21 01:49:20', NULL),
-(7, 7, NULL, 'SKU00006', 'T6', 3.1867736147892, '2024-03-21 01:53:44', '2024-03-21 03:42:04', NULL),
-(8, 8, NULL, 'SKU00007', 'T7', 30500.5, '2024-03-21 01:56:55', '2024-03-21 01:57:39', NULL),
-(9, 9, NULL, 'SKU00007', 'T7', 76.48256675494, '2024-03-21 02:30:04', '2024-03-21 02:50:37', NULL);
+(10, 10, NULL, 'sku-0001', 'broodis', 7.648256675494, '2024-05-11 07:44:42', '2024-05-11 13:31:30', NULL),
+(11, 11, NULL, 'sku-0002', 'broodis-2', 12.109739736199, '2024-05-11 11:05:51', '2024-05-11 13:31:15', NULL),
+(12, 12, NULL, 'sku-0003', 'broodis-3', 6.3735472295784, '2024-05-11 13:32:51', '2024-05-11 13:32:51', NULL);
 
 -- --------------------------------------------------------
 
@@ -3524,11 +3598,11 @@ INSERT INTO `product_variations` (`id`, `product_id`, `variation_key`, `sku`, `c
 --
 
 CREATE TABLE `product_variation_combinations` (
-  `id` bigint UNSIGNED NOT NULL,
-  `product_id` bigint UNSIGNED NOT NULL,
-  `product_variation_id` bigint UNSIGNED NOT NULL,
-  `variation_id` bigint UNSIGNED NOT NULL,
-  `variation_value_id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` bigint(20) UNSIGNED NOT NULL,
+  `product_variation_id` bigint(20) UNSIGNED NOT NULL,
+  `variation_id` bigint(20) UNSIGNED NOT NULL,
+  `variation_value_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -3541,10 +3615,10 @@ CREATE TABLE `product_variation_combinations` (
 --
 
 CREATE TABLE `product_variation_stocks` (
-  `id` bigint UNSIGNED NOT NULL,
-  `product_variation_id` bigint UNSIGNED NOT NULL,
-  `location_id` bigint UNSIGNED DEFAULT NULL COMMENT 'warehouse/location',
-  `stock_qty` int NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `product_variation_id` bigint(20) UNSIGNED NOT NULL,
+  `location_id` bigint(20) UNSIGNED DEFAULT NULL COMMENT 'warehouse/location',
+  `stock_qty` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -3555,15 +3629,9 @@ CREATE TABLE `product_variation_stocks` (
 --
 
 INSERT INTO `product_variation_stocks` (`id`, `product_variation_id`, `location_id`, `stock_qty`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 1, 980, '2024-03-20 10:48:09', '2024-03-20 11:03:15', NULL),
-(2, 2, 1, 120, '2024-03-20 13:37:03', '2024-03-20 13:37:03', NULL),
-(3, 3, 1, 100, '2024-03-20 13:46:50', '2024-03-20 13:46:50', NULL),
-(4, 4, 1, 125, '2024-03-20 13:50:01', '2024-03-20 13:50:01', NULL),
-(5, 5, 1, 125, '2024-03-20 13:50:01', '2024-03-20 13:50:01', NULL),
-(6, 6, 1, 1, '2024-03-20 23:34:36', '2024-03-20 23:34:36', NULL),
-(7, 7, 1, 100, '2024-03-21 01:53:44', '2024-03-21 01:53:44', NULL),
-(8, 8, 1, 100, '2024-03-21 01:56:55', '2024-03-21 01:56:55', NULL),
-(9, 9, 1, 1200, '2024-03-21 02:30:04', '2024-03-21 02:30:04', NULL);
+(10, 10, 1, 888, '2024-05-11 07:44:42', '2024-05-11 07:44:42', NULL),
+(11, 11, 1, 580, '2024-05-11 11:05:51', '2024-05-11 11:05:51', NULL),
+(12, 12, 1, 5, '2024-05-11 13:32:51', '2024-05-11 13:32:51', NULL);
 
 -- --------------------------------------------------------
 
@@ -3572,15 +3640,15 @@ INSERT INTO `product_variation_stocks` (`id`, `product_variation_id`, `location_
 --
 
 CREATE TABLE `refunds` (
-  `id` bigint UNSIGNED NOT NULL,
-  `user_id` bigint UNSIGNED NOT NULL,
-  `order_group_id` bigint UNSIGNED NOT NULL,
-  `order_item_id` bigint UNSIGNED NOT NULL,
-  `product_id` bigint UNSIGNED NOT NULL,
-  `order_payment_status` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `refund_reason` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `refund_reject_reason` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `refund_status` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending' COMMENT 'refunded/rejected',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `order_group_id` bigint(20) UNSIGNED NOT NULL,
+  `order_item_id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` bigint(20) UNSIGNED NOT NULL,
+  `order_payment_status` varchar(191) DEFAULT NULL,
+  `refund_reason` longtext DEFAULT NULL,
+  `refund_reject_reason` longtext DEFAULT NULL,
+  `refund_status` varchar(191) NOT NULL DEFAULT 'pending' COMMENT 'refunded/rejected',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -3592,12 +3660,12 @@ CREATE TABLE `refunds` (
 --
 
 CREATE TABLE `reply_tickets` (
-  `id` bigint UNSIGNED NOT NULL,
-  `ticket_id` int NOT NULL,
-  `replied` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `replied_by` int DEFAULT NULL,
-  `updated_by` int DEFAULT NULL,
-  `file_path` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `ticket_id` int(11) NOT NULL,
+  `replied` text DEFAULT NULL,
+  `replied_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `file_path` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -3609,12 +3677,12 @@ CREATE TABLE `reply_tickets` (
 --
 
 CREATE TABLE `reward_points` (
-  `id` bigint UNSIGNED NOT NULL,
-  `user_id` bigint UNSIGNED NOT NULL,
-  `order_group_id` bigint UNSIGNED NOT NULL,
-  `total_points` bigint NOT NULL DEFAULT '0',
-  `is_converted` tinyint NOT NULL DEFAULT '0',
-  `status` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `order_group_id` bigint(20) UNSIGNED NOT NULL,
+  `total_points` bigint(20) NOT NULL DEFAULT 0,
+  `is_converted` tinyint(4) NOT NULL DEFAULT 0,
+  `status` varchar(191) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -3626,16 +3694,16 @@ CREATE TABLE `reward_points` (
 --
 
 CREATE TABLE `roles` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `guard_name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `guard_name` varchar(191) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `is_system` tinyint(1) DEFAULT '0',
-  `is_active` tinyint NOT NULL DEFAULT '1',
-  `created_by` int DEFAULT NULL,
-  `updated_by` int DEFAULT NULL,
-  `is_delete` tinyint DEFAULT '1'
+  `is_system` tinyint(1) DEFAULT 0,
+  `is_active` tinyint(4) NOT NULL DEFAULT 1,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `is_delete` tinyint(4) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -3655,8 +3723,8 @@ INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`, `is
 --
 
 CREATE TABLE `role_has_permissions` (
-  `permission_id` bigint UNSIGNED NOT NULL,
-  `role_id` bigint UNSIGNED NOT NULL
+  `permission_id` bigint(20) UNSIGNED NOT NULL,
+  `role_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -3665,132 +3733,42 @@ CREATE TABLE `role_has_permissions` (
 
 INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (1, 2),
-(2, 2),
-(3, 2),
-(4, 2),
-(5, 2),
-(6, 2),
-(7, 2),
-(8, 2),
-(9, 2),
-(10, 2),
-(11, 2),
-(12, 2),
-(13, 2),
-(14, 2),
-(15, 2),
-(16, 2),
-(17, 2),
-(18, 2),
-(19, 2),
-(29, 2),
-(30, 2),
-(31, 2),
-(32, 2),
-(33, 2),
-(34, 2),
-(35, 2),
-(36, 2),
-(37, 2),
-(38, 2),
-(39, 2),
-(40, 2),
-(41, 2),
-(42, 2),
-(43, 2),
-(44, 2),
-(45, 2),
-(46, 2),
-(50, 2),
-(59, 2),
-(62, 2),
-(63, 2),
-(64, 2),
-(65, 2),
-(66, 2),
-(67, 2),
-(68, 2),
-(74, 2),
-(75, 2),
-(76, 2),
-(77, 2),
-(78, 2),
-(79, 2),
-(80, 2),
-(81, 2),
-(82, 2),
-(83, 2),
-(84, 2),
-(85, 2),
-(86, 2),
-(87, 2),
-(88, 2),
-(89, 2),
-(90, 2),
-(91, 2),
-(92, 2),
-(94, 2),
-(95, 2),
-(96, 2),
-(97, 2),
-(98, 2),
-(99, 2),
-(116, 2),
-(117, 2),
-(118, 2),
-(119, 2),
-(120, 2),
-(121, 2),
-(124, 2),
-(125, 2),
-(126, 2),
-(127, 2),
-(128, 2),
-(129, 2),
-(133, 2),
-(134, 2),
-(135, 2),
-(136, 2),
-(137, 2),
-(138, 2),
-(139, 2),
-(140, 2),
-(141, 2),
-(62, 3),
-(69, 3),
-(79, 3),
-(83, 3),
-(87, 3),
-(91, 3),
-(93, 3),
-(95, 3),
-(96, 3),
-(97, 3),
-(98, 3),
-(99, 3),
-(117, 3),
-(121, 3),
-(129, 3),
-(133, 3),
-(135, 3),
 (1, 4),
+(2, 2),
 (2, 4),
+(3, 2),
 (3, 4),
+(4, 2),
 (4, 4),
+(5, 2),
 (5, 4),
+(6, 2),
 (6, 4),
+(7, 2),
 (7, 4),
+(8, 2),
 (8, 4),
+(9, 2),
 (9, 4),
+(10, 2),
 (10, 4),
+(11, 2),
 (11, 4),
+(12, 2),
 (12, 4),
+(13, 2),
 (13, 4),
+(14, 2),
 (14, 4),
+(15, 2),
 (15, 4),
+(16, 2),
 (16, 4),
+(17, 2),
 (17, 4),
+(18, 2),
 (18, 4),
+(19, 2),
 (19, 4),
 (20, 4),
 (21, 4),
@@ -3801,27 +3779,46 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (26, 4),
 (27, 4),
 (28, 4),
+(29, 2),
 (29, 4),
+(30, 2),
 (30, 4),
+(31, 2),
 (31, 4),
+(32, 2),
 (32, 4),
+(33, 2),
 (33, 4),
+(34, 2),
 (34, 4),
+(35, 2),
 (35, 4),
+(36, 2),
 (36, 4),
+(37, 2),
 (37, 4),
+(38, 2),
 (38, 4),
+(39, 2),
 (39, 4),
+(40, 2),
 (40, 4),
+(41, 2),
 (41, 4),
+(42, 2),
 (42, 4),
+(43, 2),
 (43, 4),
+(44, 2),
 (44, 4),
+(45, 2),
 (45, 4),
+(46, 2),
 (46, 4),
 (47, 4),
 (48, 4),
 (49, 4),
+(50, 2),
 (50, 4),
 (51, 4),
 (52, 4),
@@ -3831,46 +3828,91 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (56, 4),
 (57, 4),
 (58, 4),
+(59, 2),
 (59, 4),
 (60, 4),
 (61, 4),
+(62, 2),
+(62, 3),
 (62, 4),
+(63, 2),
 (63, 4),
+(64, 2),
 (64, 4),
+(65, 2),
 (65, 4),
+(66, 2),
 (66, 4),
+(67, 2),
 (67, 4),
+(68, 2),
 (68, 4),
+(69, 3),
 (69, 4),
 (70, 4),
 (71, 4),
 (72, 4),
 (73, 4),
+(74, 2),
 (74, 4),
+(75, 2),
 (75, 4),
+(76, 2),
 (76, 4),
+(77, 2),
 (77, 4),
+(78, 2),
 (78, 4),
+(79, 2),
+(79, 3),
 (79, 4),
+(80, 2),
 (80, 4),
+(81, 2),
 (81, 4),
+(82, 2),
 (82, 4),
+(83, 2),
+(83, 3),
 (83, 4),
+(84, 2),
 (84, 4),
+(85, 2),
 (85, 4),
+(86, 2),
 (86, 4),
+(87, 2),
+(87, 3),
 (87, 4),
+(88, 2),
 (88, 4),
+(89, 2),
 (89, 4),
+(90, 2),
 (90, 4),
+(91, 2),
+(91, 3),
 (91, 4),
+(92, 2),
 (92, 4),
+(93, 3),
 (93, 4),
+(94, 2),
 (94, 4),
+(95, 2),
+(95, 3),
 (95, 4),
+(96, 2),
+(96, 3),
 (96, 4),
+(97, 2),
+(97, 3),
 (97, 4),
+(98, 2),
+(98, 3),
 (98, 4),
+(99, 2),
+(99, 3),
 (99, 4),
 (100, 4),
 (101, 4),
@@ -3888,31 +3930,57 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (113, 4),
 (114, 4),
 (115, 4),
+(116, 2),
 (116, 4),
+(117, 2),
+(117, 3),
 (117, 4),
+(118, 2),
 (118, 4),
+(119, 2),
 (119, 4),
+(120, 2),
 (120, 4),
+(121, 2),
+(121, 3),
 (121, 4),
 (122, 4),
 (123, 4),
+(124, 2),
 (124, 4),
+(125, 2),
 (125, 4),
+(126, 2),
 (126, 4),
+(127, 2),
 (127, 4),
+(128, 2),
 (128, 4),
+(129, 2),
+(129, 3),
 (129, 4),
 (130, 4),
 (131, 4),
 (132, 4),
+(133, 2),
+(133, 3),
 (133, 4),
+(134, 2),
 (134, 4),
+(135, 2),
+(135, 3),
 (135, 4),
+(136, 2),
 (136, 4),
+(137, 2),
 (137, 4),
+(138, 2),
 (138, 4),
+(139, 2),
 (139, 4),
+(140, 2),
 (140, 4),
+(141, 2),
 (141, 4);
 
 -- --------------------------------------------------------
@@ -3922,9 +3990,9 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 --
 
 CREATE TABLE `scheduled_delivery_time_lists` (
-  `id` bigint UNSIGNED NOT NULL,
-  `timeline` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sorting_order` int NOT NULL DEFAULT '0',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `timeline` text NOT NULL,
+  `sorting_order` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -3937,25 +4005,25 @@ CREATE TABLE `scheduled_delivery_time_lists` (
 --
 
 CREATE TABLE `shops` (
-  `id` bigint UNSIGNED NOT NULL,
-  `user_id` bigint UNSIGNED NOT NULL,
-  `is_approved` tinyint NOT NULL DEFAULT '0',
-  `is_verified_by_admin` tinyint NOT NULL DEFAULT '0',
-  `is_published` tinyint NOT NULL DEFAULT '0',
-  `shop_logo` bigint UNSIGNED DEFAULT NULL,
-  `shop_name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `shop_rating` double NOT NULL DEFAULT '0',
-  `shop_address` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `min_order_amount` double NOT NULL DEFAULT '0',
-  `admin_commission_percentage` double NOT NULL DEFAULT '0',
-  `current_balance` double NOT NULL DEFAULT '0',
-  `is_cash_payout` tinyint NOT NULL DEFAULT '0',
-  `is_bank_payout` tinyint NOT NULL DEFAULT '0',
-  `bank_name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `bank_acc_name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `bank_acc_no` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `bank_routing_no` int DEFAULT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `is_approved` tinyint(4) NOT NULL DEFAULT 0,
+  `is_verified_by_admin` tinyint(4) NOT NULL DEFAULT 0,
+  `is_published` tinyint(4) NOT NULL DEFAULT 0,
+  `shop_logo` bigint(20) UNSIGNED DEFAULT NULL,
+  `shop_name` varchar(191) NOT NULL,
+  `slug` text NOT NULL,
+  `shop_rating` double NOT NULL DEFAULT 0,
+  `shop_address` longtext DEFAULT NULL,
+  `min_order_amount` double NOT NULL DEFAULT 0,
+  `admin_commission_percentage` double NOT NULL DEFAULT 0,
+  `current_balance` double NOT NULL DEFAULT 0,
+  `is_cash_payout` tinyint(4) NOT NULL DEFAULT 0,
+  `is_bank_payout` tinyint(4) NOT NULL DEFAULT 0,
+  `bank_name` varchar(191) DEFAULT NULL,
+  `bank_acc_name` varchar(191) DEFAULT NULL,
+  `bank_acc_no` varchar(191) DEFAULT NULL,
+  `bank_routing_no` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -3975,10 +4043,10 @@ INSERT INTO `shops` (`id`, `user_id`, `is_approved`, `is_verified_by_admin`, `is
 --
 
 CREATE TABLE `states` (
-  `id` bigint UNSIGNED NOT NULL,
-  `country_id` bigint UNSIGNED NOT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_active` tinyint NOT NULL DEFAULT '0',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `country_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `is_active` tinyint(4) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -8094,8 +8162,8 @@ INSERT INTO `states` (`id`, `country_id`, `name`, `is_active`, `created_at`, `up
 --
 
 CREATE TABLE `subscribed_users` (
-  `id` bigint UNSIGNED NOT NULL,
-  `email` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `email` varchar(191) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -8108,9 +8176,9 @@ CREATE TABLE `subscribed_users` (
 --
 
 CREATE TABLE `system_settings` (
-  `id` bigint UNSIGNED NOT NULL,
-  `entity` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `entity` varchar(191) NOT NULL,
+  `value` longtext DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -8122,8 +8190,8 @@ CREATE TABLE `system_settings` (
 
 INSERT INTO `system_settings` (`id`, `entity`, `value`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'google_login', '0', '2022-12-06 23:33:40', '2022-12-06 23:33:41', NULL),
-(2, 'default_currency', 'idr', '2022-12-06 23:55:08', '2024-03-20 13:51:01', NULL),
-(3, 'no_of_decimals', '0', '2022-12-06 23:55:08', '2024-03-18 00:48:44', NULL),
+(2, 'default_currency', 'idr', '2022-12-06 23:55:08', '2024-05-11 08:53:35', NULL),
+(3, 'no_of_decimals', '2', '2022-12-06 23:55:08', '2024-05-11 12:32:01', NULL),
 (4, 'truncate_price', '0', '2022-12-06 23:55:08', '2022-12-06 23:55:08', NULL),
 (5, 'enable_multi_vendor', '0', '2022-12-24 23:00:08', '2023-02-18 01:56:54', NULL),
 (6, 'default_admin_commission', '5', '2022-12-24 23:00:08', '2022-12-24 23:00:08', NULL),
@@ -8143,7 +8211,7 @@ INSERT INTO `system_settings` (`id`, `entity`, `value`, `created_at`, `updated_a
 (20, 'navbar_pages', '[\"1\"]', '2023-02-19 23:41:47', '2023-03-01 02:32:34', NULL),
 (21, 'navbar_contact_number', '(021) 7561102', '2023-02-19 23:41:47', '2024-03-18 01:36:29', NULL),
 (22, 'hero_sliders', '[{\"id\":369730,\"sub_title\":\"Sub Title 1\",\"title\":\"TITLE 1\",\"text\":\"Example Slider 1\",\"image\":\"18\",\"link\":\"https:\\/\\/youtube.com\"},{\"id\":442740,\"sub_title\":\"Sub Title 2\",\"title\":\"TITLE 2\",\"text\":\"Example Slider 2\",\"image\":\"19\",\"link\":\"https:\\/\\/google.com\"}]', '2023-02-20 04:36:00', '2024-03-18 11:05:58', NULL),
-(24, 'top_category_ids', '[\"6\",\"5\",\"4\",\"3\",\"2\"]', '2023-02-25 02:29:10', '2023-02-25 02:29:10', NULL),
+(24, 'top_category_ids', '[\"11\"]', '2023-02-25 02:29:10', '2024-05-11 11:22:11', NULL),
 (25, 'featured_sub_title', 'Platform mindshare through effective infomediaries Dynamically implement.', '2023-02-25 03:18:46', '2023-02-25 03:18:46', NULL),
 (26, 'featured_products_left', '[\"1\",\"2\",\"5\"]', '2023-02-25 03:18:46', '2023-02-25 21:38:23', NULL),
 (27, 'featured_products_right', '[\"2\",\"3\",\"4\"]', '2023-02-25 03:18:46', '2023-02-25 05:53:03', NULL),
@@ -8164,8 +8232,8 @@ INSERT INTO `system_settings` (`id`, `entity`, `value`, `created_at`, `updated_a
 (42, 'best_selling_products', '[\"1\"]', '2023-02-26 23:01:19', '2024-05-02 12:17:39', NULL),
 (43, 'best_selling_banner', NULL, '2023-02-26 23:01:19', '2024-05-02 12:40:45', NULL),
 (44, 'best_selling_banner_link', NULL, '2023-02-26 23:01:19', '2023-02-26 23:01:19', NULL),
-(45, 'product_listing_categories', '[\"6\",\"5\",\"4\",\"3\",\"2\"]', '2023-02-26 23:47:35', '2023-02-26 23:47:35', NULL),
-(46, 'footer_categories', '[\"5\"]', '2023-02-28 21:33:33', '2024-05-02 10:27:56', NULL),
+(45, 'product_listing_categories', '[\"11\"]', '2023-02-26 23:47:35', '2024-05-11 10:38:24', NULL),
+(46, 'footer_categories', '[\"11\",\"10\"]', '2023-02-28 21:33:33', '2024-05-11 07:35:14', NULL),
 (47, 'quick_links', '[\"1\"]', '2023-02-28 21:33:33', '2024-05-02 11:49:02', NULL),
 (48, 'footer_logo', '12', '2023-02-28 21:33:33', '2024-03-18 01:04:51', NULL),
 (49, 'accepted_payment_banner', NULL, '2023-02-28 21:33:33', '2024-03-20 09:04:08', NULL),
@@ -8220,8 +8288,8 @@ INSERT INTO `system_settings` (`id`, `entity`, `value`, `created_at`, `updated_a
 --
 
 CREATE TABLE `tags` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -8243,9 +8311,9 @@ INSERT INTO `tags` (`id`, `name`, `created_at`, `updated_at`, `deleted_at`) VALU
 --
 
 CREATE TABLE `taxes` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_active` tinyint NOT NULL DEFAULT '0',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `is_active` tinyint(4) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` datetime NOT NULL
@@ -8266,44 +8334,44 @@ INSERT INTO `taxes` (`id`, `name`, `is_active`, `created_at`, `updated_at`, `del
 --
 
 CREATE TABLE `temporary_product_import_data` (
-  `id` bigint UNSIGNED NOT NULL,
-  `shop_id` int NOT NULL,
-  `added_by` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'admin',
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `brand_id` int DEFAULT NULL,
-  `unit_id` int DEFAULT NULL,
-  `thumbnail_image` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `gallery_images` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `product_tags` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `short_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `price` double NOT NULL DEFAULT '0',
-  `min_price` double NOT NULL DEFAULT '0',
-  `max_price` double NOT NULL DEFAULT '0',
-  `discount_value` double NOT NULL DEFAULT '0',
-  `discount_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `discount_start_date` int DEFAULT NULL,
-  `discount_end_date` int DEFAULT NULL,
-  `sell_target` int DEFAULT NULL,
-  `stock_qty` int NOT NULL DEFAULT '0',
-  `sku` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `code` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `is_published` tinyint NOT NULL DEFAULT '0',
-  `is_featured` tinyint NOT NULL DEFAULT '0',
-  `min_purchase_qty` int NOT NULL DEFAULT '1',
-  `max_purchase_qty` int NOT NULL DEFAULT '1',
-  `has_variation` tinyint NOT NULL DEFAULT '1',
-  `has_warranty` tinyint NOT NULL DEFAULT '1',
-  `total_sale_count` double NOT NULL DEFAULT '0',
-  `standard_delivery_hours` int NOT NULL DEFAULT '24',
-  `express_delivery_hours` int NOT NULL DEFAULT '24',
-  `size_guide` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `meta_title` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `meta_description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `meta_img` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `reward_points` bigint NOT NULL DEFAULT '0',
-  `created_by` int DEFAULT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `shop_id` int(11) NOT NULL,
+  `added_by` varchar(191) NOT NULL DEFAULT 'admin',
+  `name` varchar(191) NOT NULL,
+  `slug` varchar(191) NOT NULL,
+  `brand_id` int(11) DEFAULT NULL,
+  `unit_id` int(11) DEFAULT NULL,
+  `thumbnail_image` text DEFAULT NULL,
+  `gallery_images` longtext DEFAULT NULL,
+  `product_tags` longtext DEFAULT NULL,
+  `short_description` text DEFAULT NULL,
+  `description` longtext DEFAULT NULL,
+  `price` double NOT NULL DEFAULT 0,
+  `min_price` double NOT NULL DEFAULT 0,
+  `max_price` double NOT NULL DEFAULT 0,
+  `discount_value` double NOT NULL DEFAULT 0,
+  `discount_type` varchar(191) DEFAULT NULL,
+  `discount_start_date` int(11) DEFAULT NULL,
+  `discount_end_date` int(11) DEFAULT NULL,
+  `sell_target` int(11) DEFAULT NULL,
+  `stock_qty` int(11) NOT NULL DEFAULT 0,
+  `sku` text DEFAULT NULL,
+  `code` text DEFAULT NULL,
+  `is_published` tinyint(4) NOT NULL DEFAULT 0,
+  `is_featured` tinyint(4) NOT NULL DEFAULT 0,
+  `min_purchase_qty` int(11) NOT NULL DEFAULT 1,
+  `max_purchase_qty` int(11) NOT NULL DEFAULT 1,
+  `has_variation` tinyint(4) NOT NULL DEFAULT 1,
+  `has_warranty` tinyint(4) NOT NULL DEFAULT 1,
+  `total_sale_count` double NOT NULL DEFAULT 0,
+  `standard_delivery_hours` int(11) NOT NULL DEFAULT 24,
+  `express_delivery_hours` int(11) NOT NULL DEFAULT 24,
+  `size_guide` text DEFAULT NULL,
+  `meta_title` mediumtext DEFAULT NULL,
+  `meta_description` longtext DEFAULT NULL,
+  `meta_img` varchar(191) DEFAULT NULL,
+  `reward_points` bigint(20) NOT NULL DEFAULT 0,
+  `created_by` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -8315,11 +8383,11 @@ CREATE TABLE `temporary_product_import_data` (
 --
 
 CREATE TABLE `themes` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_active` tinyint NOT NULL DEFAULT '1',
-  `is_default` tinyint NOT NULL DEFAULT '0',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `code` varchar(191) NOT NULL,
+  `is_active` tinyint(4) NOT NULL DEFAULT 1,
+  `is_default` tinyint(4) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -8340,14 +8408,14 @@ INSERT INTO `themes` (`id`, `name`, `code`, `is_active`, `is_default`, `created_
 --
 
 CREATE TABLE `tickets` (
-  `id` bigint UNSIGNED NOT NULL,
-  `title` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category_id` int DEFAULT NULL,
-  `priority_id` int DEFAULT NULL,
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `created_by` int DEFAULT NULL,
-  `assign_by` int DEFAULT NULL,
-  `is_active` tinyint(1) DEFAULT '1',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(191) NOT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  `priority_id` int(11) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `assign_by` int(11) DEFAULT NULL,
+  `is_active` tinyint(1) DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -8359,11 +8427,11 @@ CREATE TABLE `tickets` (
 --
 
 CREATE TABLE `ticket_categories` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_active` tinyint(1) DEFAULT '1',
-  `user_id` int DEFAULT NULL,
-  `assign_staff` int DEFAULT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `is_active` tinyint(1) DEFAULT 1,
+  `user_id` int(11) DEFAULT NULL,
+  `assign_staff` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -8375,10 +8443,10 @@ CREATE TABLE `ticket_categories` (
 --
 
 CREATE TABLE `ticket_files` (
-  `id` bigint UNSIGNED NOT NULL,
-  `ticket_id` int NOT NULL,
-  `replied_id` int DEFAULT NULL,
-  `file_path` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `ticket_id` int(11) NOT NULL,
+  `replied_id` int(11) DEFAULT NULL,
+  `file_path` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -8390,10 +8458,10 @@ CREATE TABLE `ticket_files` (
 --
 
 CREATE TABLE `units` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_active` tinyint NOT NULL DEFAULT '1',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `slug` varchar(191) NOT NULL,
+  `is_active` tinyint(4) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -8410,7 +8478,9 @@ INSERT INTO `units` (`id`, `name`, `slug`, `is_active`, `created_at`, `updated_a
 (4, 'cm', 'cm-NHcj1', 0, '2024-03-20 10:15:29', '2024-05-11 05:37:08', '2024-05-11 05:37:08'),
 (5, 'mm', 'mm-zxc1h', 0, '2024-03-20 10:15:35', '2024-05-11 05:37:13', '2024-05-11 05:37:13'),
 (6, 'ml', 'ml-6ZoYl', 0, '2024-03-20 10:15:46', '2024-05-11 05:37:19', '2024-05-11 05:37:19'),
-(7, 'xs', 'xs-r4pUA', 1, '2024-03-20 10:16:57', '2024-03-20 10:17:10', '2024-03-20 10:17:10');
+(7, 'xs', 'xs-r4pUA', 1, '2024-03-20 10:16:57', '2024-03-20 10:17:10', '2024-03-20 10:17:10'),
+(8, 'pcs', 'pcs-oW4JV', 1, '2024-05-11 07:40:02', '2024-05-11 07:40:02', NULL),
+(9, 'pck', 'pck-6ZQF7', 1, '2024-05-11 07:40:10', '2024-05-11 07:40:10', NULL);
 
 -- --------------------------------------------------------
 
@@ -8419,10 +8489,10 @@ INSERT INTO `units` (`id`, `name`, `slug`, `is_active`, `created_at`, `updated_a
 --
 
 CREATE TABLE `unit_localizations` (
-  `id` bigint UNSIGNED NOT NULL,
-  `unit_id` bigint UNSIGNED DEFAULT NULL,
-  `lang_key` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `unit_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `lang_key` varchar(191) NOT NULL,
+  `name` varchar(191) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -8439,7 +8509,9 @@ INSERT INTO `unit_localizations` (`id`, `unit_id`, `lang_key`, `name`, `created_
 (4, 4, 'en', 'cm', '2024-03-20 10:15:29', '2024-03-20 10:15:29', NULL),
 (5, 5, 'en', 'mm', '2024-03-20 10:15:35', '2024-03-20 10:15:35', NULL),
 (6, 6, 'en', 'ml', '2024-03-20 10:15:46', '2024-03-20 10:15:46', NULL),
-(7, 7, 'en', 'xs', '2024-03-20 10:16:57', '2024-03-20 10:16:57', NULL);
+(7, 7, 'en', 'xs', '2024-03-20 10:16:57', '2024-03-20 10:16:57', NULL),
+(8, 8, 'en', 'pcs', '2024-05-11 07:40:02', '2024-05-11 07:40:02', NULL),
+(9, 9, 'en', 'pck', '2024-05-11 07:40:10', '2024-05-11 07:40:10', NULL);
 
 -- --------------------------------------------------------
 
@@ -8448,32 +8520,32 @@ INSERT INTO `unit_localizations` (`id`, `unit_id`, `lang_key`, `name`, `created_
 --
 
 CREATE TABLE `users` (
-  `id` bigint UNSIGNED NOT NULL,
-  `role_id` bigint UNSIGNED DEFAULT NULL,
-  `user_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'customer',
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email_or_otp_verified` tinyint NOT NULL DEFAULT '0',
-  `verification_code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `new_email_verification_code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `password` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `remember_token` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `provider_id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `avatar` bigint UNSIGNED DEFAULT NULL,
-  `postal_code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `location_id` bigint UNSIGNED DEFAULT NULL COMMENT 'added for deliveryman',
-  `address` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT 'added for deliveryman',
-  `user_balance` double NOT NULL DEFAULT '0',
-  `is_banned` tinyint NOT NULL DEFAULT '0',
-  `is_active` tinyint NOT NULL DEFAULT '1' COMMENT 'added for deliveryman',
-  `shop_id` bigint UNSIGNED DEFAULT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `role_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `user_type` varchar(191) NOT NULL DEFAULT 'customer',
+  `name` varchar(191) NOT NULL,
+  `email` varchar(191) DEFAULT NULL,
+  `phone` varchar(191) DEFAULT NULL,
+  `email_or_otp_verified` tinyint(4) NOT NULL DEFAULT 0,
+  `verification_code` varchar(191) DEFAULT NULL,
+  `new_email_verification_code` varchar(191) DEFAULT NULL,
+  `password` varchar(191) DEFAULT NULL,
+  `remember_token` varchar(191) DEFAULT NULL,
+  `provider_id` varchar(191) DEFAULT NULL,
+  `avatar` bigint(20) UNSIGNED DEFAULT NULL,
+  `postal_code` varchar(191) DEFAULT NULL,
+  `location_id` bigint(20) UNSIGNED DEFAULT NULL COMMENT 'added for deliveryman',
+  `address` longtext DEFAULT NULL COMMENT 'added for deliveryman',
+  `user_balance` double NOT NULL DEFAULT 0,
+  `is_banned` tinyint(4) NOT NULL DEFAULT 0,
+  `is_active` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'added for deliveryman',
+  `shop_id` bigint(20) UNSIGNED DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `created_by` int DEFAULT NULL,
-  `updated_by` int DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
   `salary` decimal(8,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -8494,13 +8566,13 @@ INSERT INTO `users` (`id`, `role_id`, `user_type`, `name`, `email`, `phone`, `em
 --
 
 CREATE TABLE `user_addresses` (
-  `id` bigint UNSIGNED NOT NULL,
-  `user_id` bigint UNSIGNED NOT NULL,
-  `country_id` bigint UNSIGNED NOT NULL,
-  `state_id` bigint UNSIGNED NOT NULL,
-  `city_id` bigint UNSIGNED NOT NULL,
-  `address` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_default` tinyint NOT NULL DEFAULT '0' COMMENT 'only one can be default',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `country_id` bigint(20) UNSIGNED NOT NULL,
+  `state_id` bigint(20) UNSIGNED NOT NULL,
+  `city_id` bigint(20) UNSIGNED NOT NULL,
+  `address` longtext NOT NULL,
+  `is_default` tinyint(4) NOT NULL DEFAULT 0 COMMENT 'only one can be default',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -8513,9 +8585,9 @@ CREATE TABLE `user_addresses` (
 --
 
 CREATE TABLE `variations` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_active` tinyint NOT NULL DEFAULT '1',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `is_active` tinyint(4) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -8544,10 +8616,10 @@ INSERT INTO `variations` (`id`, `name`, `is_active`, `created_at`, `updated_at`,
 --
 
 CREATE TABLE `variation_localizations` (
-  `id` bigint UNSIGNED NOT NULL,
-  `variation_id` bigint UNSIGNED DEFAULT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lang_key` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `variation_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `name` varchar(191) NOT NULL,
+  `lang_key` varchar(191) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -8574,12 +8646,12 @@ INSERT INTO `variation_localizations` (`id`, `variation_id`, `name`, `lang_key`,
 --
 
 CREATE TABLE `variation_values` (
-  `id` bigint UNSIGNED NOT NULL,
-  `variation_id` bigint UNSIGNED DEFAULT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_active` tinyint NOT NULL DEFAULT '1',
-  `image` bigint UNSIGNED DEFAULT NULL COMMENT 'only for colors',
-  `color_code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'only for colors',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `variation_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `name` varchar(191) NOT NULL,
+  `is_active` tinyint(4) NOT NULL DEFAULT 1,
+  `image` bigint(20) UNSIGNED DEFAULT NULL COMMENT 'only for colors',
+  `color_code` varchar(191) DEFAULT NULL COMMENT 'only for colors',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -8599,11 +8671,11 @@ INSERT INTO `variation_values` (`id`, `variation_id`, `name`, `is_active`, `imag
 --
 
 CREATE TABLE `variation_value_localizations` (
-  `id` bigint UNSIGNED NOT NULL,
-  `variation_value_id` bigint UNSIGNED DEFAULT NULL,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` bigint UNSIGNED DEFAULT NULL,
-  `lang_key` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `variation_value_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `name` varchar(191) NOT NULL,
+  `image` bigint(20) UNSIGNED DEFAULT NULL,
+  `lang_key` varchar(191) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -8622,11 +8694,11 @@ INSERT INTO `variation_value_localizations` (`id`, `variation_value_id`, `name`,
 --
 
 CREATE TABLE `wallet_histories` (
-  `id` bigint UNSIGNED NOT NULL,
-  `user_id` bigint UNSIGNED NOT NULL,
-  `amount` double NOT NULL DEFAULT '0',
-  `payment_method` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'added' COMMENT 'added/pending/cancelled',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `amount` double NOT NULL DEFAULT 0,
+  `payment_method` varchar(191) DEFAULT NULL,
+  `status` varchar(191) NOT NULL DEFAULT 'added' COMMENT 'added/pending/cancelled',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -8638,9 +8710,9 @@ CREATE TABLE `wallet_histories` (
 --
 
 CREATE TABLE `wishlists` (
-  `id` bigint UNSIGNED NOT NULL,
-  `product_id` bigint UNSIGNED NOT NULL,
-  `user_id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -9315,505 +9387,505 @@ ALTER TABLE `wishlists`
 -- AUTO_INCREMENT for table `assign_tickets`
 --
 ALTER TABLE `assign_tickets`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `blogs`
 --
 ALTER TABLE `blogs`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `blog_categories`
 --
 ALTER TABLE `blog_categories`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `blog_localizations`
 --
 ALTER TABLE `blog_localizations`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `blog_tags`
 --
 ALTER TABLE `blog_tags`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `blog_themes`
 --
 ALTER TABLE `blog_themes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `brand_localizations`
 --
 ALTER TABLE `brand_localizations`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `campaigns`
 --
 ALTER TABLE `campaigns`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `campaign_products`
 --
 ALTER TABLE `campaign_products`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `campaign_themes`
 --
 ALTER TABLE `campaign_themes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `category_brands`
 --
 ALTER TABLE `category_brands`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `category_localizations`
 --
 ALTER TABLE `category_localizations`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `category_themes`
 --
 ALTER TABLE `category_themes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `cities`
 --
 ALTER TABLE `cities`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=501;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=501;
 
 --
 -- AUTO_INCREMENT for table `contact_us_messages`
 --
 ALTER TABLE `contact_us_messages`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `countries`
 --
 ALTER TABLE `countries`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=247;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=247;
 
 --
 -- AUTO_INCREMENT for table `coupons`
 --
 ALTER TABLE `coupons`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `coupon_themes`
 --
 ALTER TABLE `coupon_themes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `coupon_usages`
 --
 ALTER TABLE `coupon_usages`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `currencies`
 --
 ALTER TABLE `currencies`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `enmart_modules`
 --
 ALTER TABLE `enmart_modules`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `grass_period_payments`
 --
 ALTER TABLE `grass_period_payments`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `languages`
 --
 ALTER TABLE `languages`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `licenses`
 --
 ALTER TABLE `licenses`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `localizations`
 --
 ALTER TABLE `localizations`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1147;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1154;
 
 --
 -- AUTO_INCREMENT for table `locations`
 --
 ALTER TABLE `locations`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `logistics`
 --
 ALTER TABLE `logistics`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `logistic_zones`
 --
 ALTER TABLE `logistic_zones`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `logistic_zone_cities`
 --
 ALTER TABLE `logistic_zone_cities`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `media_managers`
 --
 ALTER TABLE `media_managers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `order_groups`
 --
 ALTER TABLE `order_groups`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `order_updates`
 --
 ALTER TABLE `order_updates`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `pages`
 --
 ALTER TABLE `pages`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `page_localizations`
 --
 ALTER TABLE `page_localizations`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `payment_gateways`
 --
 ALTER TABLE `payment_gateways`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `payment_gateway_details`
 --
 ALTER TABLE `payment_gateway_details`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `payouts`
 --
 ALTER TABLE `payouts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `payrolls`
 --
 ALTER TABLE `payrolls`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `priorities`
 --
 ALTER TABLE `priorities`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `product_categories`
 --
 ALTER TABLE `product_categories`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `product_colors`
 --
 ALTER TABLE `product_colors`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `product_localizations`
 --
 ALTER TABLE `product_localizations`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `product_tags`
 --
 ALTER TABLE `product_tags`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `product_taxes`
 --
 ALTER TABLE `product_taxes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `product_themes`
 --
 ALTER TABLE `product_themes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `product_variations`
 --
 ALTER TABLE `product_variations`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `product_variation_combinations`
 --
 ALTER TABLE `product_variation_combinations`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `product_variation_stocks`
 --
 ALTER TABLE `product_variation_stocks`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `refunds`
 --
 ALTER TABLE `refunds`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `reply_tickets`
 --
 ALTER TABLE `reply_tickets`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `reward_points`
 --
 ALTER TABLE `reward_points`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `scheduled_delivery_time_lists`
 --
 ALTER TABLE `scheduled_delivery_time_lists`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `shops`
 --
 ALTER TABLE `shops`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `states`
 --
 ALTER TABLE `states`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4122;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4122;
 
 --
 -- AUTO_INCREMENT for table `subscribed_users`
 --
 ALTER TABLE `subscribed_users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `system_settings`
 --
 ALTER TABLE `system_settings`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `taxes`
 --
 ALTER TABLE `taxes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `temporary_product_import_data`
 --
 ALTER TABLE `temporary_product_import_data`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `themes`
 --
 ALTER TABLE `themes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ticket_categories`
 --
 ALTER TABLE `ticket_categories`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ticket_files`
 --
 ALTER TABLE `ticket_files`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `units`
 --
 ALTER TABLE `units`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `unit_localizations`
 --
 ALTER TABLE `unit_localizations`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `user_addresses`
 --
 ALTER TABLE `user_addresses`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `variations`
 --
 ALTER TABLE `variations`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `variation_localizations`
 --
 ALTER TABLE `variation_localizations`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `variation_values`
 --
 ALTER TABLE `variation_values`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `variation_value_localizations`
 --
 ALTER TABLE `variation_value_localizations`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `wallet_histories`
 --
 ALTER TABLE `wallet_histories`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `wishlists`
 --
 ALTER TABLE `wishlists`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables

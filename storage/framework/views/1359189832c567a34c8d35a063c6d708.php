@@ -17,7 +17,7 @@
                             <?php if(getSetting('admin_panel_logo') != ''): ?>
                                 <img src="<?php echo e(uploadedAsset(getSetting('admin_panel_logo'))); ?>" class="tt-brand-logo ms-2" alt="logo" />
                             <?php else: ?>
-                                <h4 class="d-inline-block px-2 bg-white m-auto"><?php echo e(env('APP_NAME')); ?></h4>
+                                <h4 class="d-inline-block px-2 m-auto"><?php echo e(env('APP_NAME')); ?></h4>
                             <?php endif; ?>
                         </a>
                     </div>

@@ -189,6 +189,9 @@
                         <span><i data-feather="chevron-left"></i></span>
                     </a>
                 </div>
+
+               
+
                 <div class="col-xxl-10 col-xl-9 col-md-9 col-7">
                     <div class="gshop-navbar-right d-flex align-items-center justify-content-end position-relative">
 
@@ -509,6 +512,7 @@
                         </button>
                     </div>
                 </div>
+             
             </div>
         </div>
     </div>
