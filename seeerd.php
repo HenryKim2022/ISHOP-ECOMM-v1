@@ -1,6 +1,6 @@
 <?php
 $appTitle = "";
-$appDescb = "DB FK-Finder by Henry.K";
+$appDescb = "DB ERD-Generator by Henry.K";
 $favicon = '&#8801;';
 ?>
 
@@ -210,101 +210,163 @@ $favicon = '&#8801;';
         </pre>
     </div>
 
-    <div class="second-log-container">
-        <table id="foreign-keys-table" class="table table-striped table-responsive table-bordered">
-            <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>Table Name</th>
-                    <th>Table Attributes</th>
-                    <th>The FK in Attributes</th>
-                    <th>Related Table Name</th>
-                    <th>Related Table Attributes</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $servername = $envVariables['DB_HOST'];
-                $username = $envVariables['DB_USERNAME'];
-                $password = $envVariables['DB_PASSWORD'];
-                $dbname = $envVariables['DB_DATABASE'];
+    <div class="third-log-container">
+        <!-- JointJS dependencies -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.0/backbone-min.js"></script>
+        <!-- JointJS library -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jointjs/3.5.1/joint.min.js"></script>
 
-                $conn = new mysqli($servername, $username, $password, $dbname);
-
-                if ($conn->connect_error) {
-                    die("Connection failed: " . $conn->connect_error);
-                }
-
-                function getTableAttributes($conn, $table)
-                {
-                    $attributes = [];
-                    $result = $conn->query("SHOW COLUMNS FROM `$table`");
-                    while ($row = $result->fetch_assoc()) {
-                        $attributes[] = $row['Field'] . ' (' . $row['Type'] . ')';
+        <script>
+            function fetchTableData() {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'get_erd_data.php', true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                        var responseData = JSON.parse(xhr.responseText);
+                        generateERD(responseData.tables, responseData.relationships);
                     }
-                    return $attributes;
-                }
+                };
+                xhr.send();
+            }
 
-                function getTableRows($conn, $table)
-                {
-                    $attributes = getTableAttributes($conn, $table);
-                    $data = [];
-                    $result = $conn->query("SELECT * FROM `$table`");
-                    while ($row = $result->fetch_assoc()) {
-                        $rowData = [];
-                        foreach ($attributes as $attribute) {
-                            $rowData[] = $row[$attribute];
+            function generateERD(tablesData, relationshipsData) {
+                var graph = new joint.dia.Graph();
+
+                var canvas = document.querySelector('.third-log-container');
+                var paperContainer = document.createElement('div');
+                paperContainer.style.width = '100%';
+                paperContainer.style.height = '500vh';
+                canvas.appendChild(paperContainer);
+
+                var paper = new joint.dia.Paper({
+                    el: paperContainer,
+                    model: graph,
+                    width: '100%',
+                    height: '500vh',
+                    gridSize: 10,
+                    drawGrid: true,
+                    background: {
+                        color: 'rgba(0, 0, 0, 0.1)'
+                    },
+                    interactive: {
+                        zoom: true,
+                        touch: false
+                    },
+                    async: true
+                });
+
+                var jointShapes = {};
+                tablesData.forEach(function(tableData, index) {
+                    var rect = tableData.shape;
+                    var x = (index % 5) * 200 + 100;
+                    var y = Math.floor(index / 5) * 150 + 100;
+
+                    rect.position = {
+                        x: x,
+                        y: y
+                    };
+
+                    var labelLines = tableData.shape.attrs.label.text.split('\n');
+                    var labelHeight = labelLines.length * 16;
+
+                    rect.size = {
+                        width: labelLines.reduce((maxWidth, line) => Math.max(maxWidth, line.length * 8), 0) + 8,
+                        height: 8 + labelHeight
+                    };
+
+                    var jointShape = new joint.shapes.standard.Rectangle({
+                        position: rect.position,
+                        size: rect.size,
+                        attrs: {
+                            body: rect.attrs.body,
+                            label: {
+                                text: rect.attrs.label.text,
+                                fill: rect.attrs.label.fill,
+                                'font-size': rect.attrs.label.fontSize,
+                                'font-weight': rect.attrs.label.fontWeight,
+                                'ref-y': '1%',
+                                'y-alignment': 'middle',
+                                'pointer-events': 'none'
+                            }
                         }
-                        $data[] = $rowData;
+                    });
+
+                    graph.addCell(jointShape);
+                    jointShapes[tableData.id] = jointShape;
+                });
+
+
+                paper.on('scale', function(scale) {
+                    graph.getCells().forEach(function(cell) {
+                        if (cell.isElement()) {
+                            var label = cell.findView(paper).findBySelector('text');
+                            var labelFontSize = parseInt(label.attr('font-size'), 10);
+                            label.attr('transform', 'scale(' + (1 / scale.sx) + ')');
+                            label.attr('y', labelFontSize / (2 * scale.sx));
+                        }
+                    });
+                });
+
+
+
+                relationshipsData.forEach(function(relationship) {
+                    var sourceTable = relationship.TABLE_NAME;
+                    var targetTable = relationship.REFERENCED_TABLE_NAME;
+
+                    if (jointShapes[sourceTable] && jointShapes[targetTable]) {
+                        var sourceShape = jointShapes[sourceTable];
+                        var targetShape = jointShapes[targetTable];
+
+                        var link = new joint.dia.Link({
+                            source: {
+                                id: sourceShape.id
+                            },
+                            target: {
+                                id: targetShape.id
+                            },
+                            smooth: true,
+                            attrs: {
+                                '.connection': {
+                                    'stroke': 'red',
+                                    'fill': 'transparent',
+                                    'stroke-width': 2
+                                }
+                            }
+                        });
+
+                        link.attr('.connection-wrap/fill', 'none');
+
+                        link.addTo(graph);
                     }
-                    return $data;
-                }
+                });
 
-                $tables = [];
-                $result = $conn->query("SHOW TABLES");
-                while ($row = $result->fetch_row()) {
-                    $tables[] = $row[0];
-                }
+                var zoomInButton = document.createElement('button');
+                zoomInButton.innerText = '+';
+                zoomInButton.onclick = function() {
+                    paper.scale(paper.scale().sx + 0.2, paper.scale().sy + 0.2);
+                };
 
-                $count = 1;
-                foreach ($tables as $table) {
-                    $result = $conn->query("SHOW CREATE TABLE `$table`");
-                    $row = $result->fetch_row();
-                    $createTableQuery = $row[1];
+                var zoomOutButton = document.createElement('button');
+                zoomOutButton.innerText = '-';
+                zoomOutButton.onclick = function() {
+                    paper.scale(paper.scale().sx - 0.2, paper.scale().sy - 0.2);
+                };
 
-                    preg_match_all('/FOREIGN KEY \(`(.*?)`\) REFERENCES `(.*?)` \(`(.*?)`\)/', $createTableQuery, $matches, PREG_SET_ORDER);
+                var zoomContainer = document.createElement('div');
+                zoomContainer.appendChild(zoomInButton);
+                zoomContainer.appendChild(zoomOutButton);
 
-                    foreach ($matches as $match) {
-                        $columnName = $match[1];
-                        $referencedTable = $match[2];
-                        $referencedColumn = $match[3];
+                var zoomWrapper = document.createElement('div');
+                zoomWrapper.appendChild(zoomContainer);
+                canvas.appendChild(zoomWrapper);
 
-                        $tableAttributes = getTableAttributes($conn, $table);
-                        $referencedTableAttributes = getTableAttributes($conn, $referencedTable);
 
-                        echo '<tr>';
-                        echo '<td class="number">' . $count . '</td>';
-                        echo '<td>' . $table . '</td>';
-                        echo '<td>' . implode("<br>", $tableAttributes) . '</td>';
-                        echo '<td>' . $columnName . '</td>';
-                        echo '<td>' . $referencedTable . '</td>';
-                        echo '<td>' . implode("<br>", $referencedTableAttributes) . '</td>';
-                        echo '</tr>';
+            }
 
-                        $count++;
-                    }
-                }
-
-                $conn->close();
-
-                if (count($tables) === 0) {
-                    echo '<tr><td colspan="6">Database empty</td></tr>';
-                }
-                ?>
-            </tbody>
-        </table>
+            fetchTableData();
+        </script>
     </div>
-
 
 </body>
 
