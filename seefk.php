@@ -1,5 +1,6 @@
 <?php
 $appTitle = "";
+$appDescb = "DB FK-Finder by Henry.K";
 $favicon = '&#8801;';
 ?>
 
@@ -7,7 +8,7 @@ $favicon = '&#8801;';
 <html>
 
 <head>
-    <title><?= $favicon . '  DB FK-Finder' ?></title>
+    <title><?= '  ' . $appTitle ?></title>
     <style>
         h5 {
             margin-bottom: 0.1rem;
@@ -36,7 +37,11 @@ $favicon = '&#8801;';
         }
     </style>
 
+    <!-- DataTables BS5 -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.min.css">
+    <!-- DataTables Buttons -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 
     <style>
         .2nd-log-container {
@@ -60,9 +65,26 @@ $favicon = '&#8801;';
         .number {
             font-weight: bold;
         }
+
+        #foreign-keys-table thead th {
+            background-color: #1a1b1c;
+            color: #f8f9fa;
+        }
+
+
+        #foreign-keys-table tbody tr:nth-child(odd) {
+            background-color: #cfdae5;
+        }
+
+        #foreign-keys-table tbody tr:nth-child(even) {
+            background-color: #ffffff;
+        }
     </style>
 
     <style>
+        .dataTables_length {
+            margin-right: 22px;
+        }
         .pagination {
             display: flex;
             justify-content: center;
@@ -105,6 +127,16 @@ $favicon = '&#8801;';
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.min.js"></script>
 
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.colVis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jszip/dist/jszip.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/datatables.net-buttons-dt@2.0.0/js/buttons.dataTables.min.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var logContainer = document.querySelector('.log-2');
@@ -120,7 +152,22 @@ $favicon = '&#8801;';
         $(document).ready(function() {
             $('#foreign-keys-table').DataTable({
                 "paging": true,
-                "searching": true
+                "searching": true,
+                "lengthMenu": [10, 25, 50, 100, 200, 500],
+
+                dom: '<"top"lfB>rt<"bottom"ip><"clear">',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print',
+                    {
+                        extend: 'print',
+                        customize: function(win) {
+                            $(win.document.head).find('link[rel="icon"]').remove(); 
+                            $(win.document.head).find('title').remove();
+                            $(win.document.head).find('title').text('');
+                            $(win.document.body).find('footer').remove();
+                        }
+                    },
+                ]
             });
         });
     </script>
@@ -129,40 +176,43 @@ $favicon = '&#8801;';
 </head>
 
 <body>
-    <h1>DB FK-Finder by Henry.K</h1>
+    <h1><?= $appDescb ?></h1>
     <div class="1st-log-container">
         <pre class="log-1"><?php
-                            // Read the .env file and parse it into an array
-                            $envFile = __DIR__ . '/.env';
-                            $envData = file_get_contents($envFile);
-                            $envVariables = [];
+            // Read the .env file and parse it into an array
+            $envFile = __DIR__ . '/.env';
+            $envData = file_get_contents($envFile);
+            $envVariables = [];
 
-                            // Parse each line of the .env file
-                            $lines = explode("\n", $envData);
-                            foreach ($lines as $line) {
-                                $line = trim($line);
+            // Parse each line of the .env file
+            $lines = explode("\n", $envData);
+            foreach ($lines as $line) {
+                $line = trim($line);
 
-                                // Display log
-                                if (!empty($line) && strpos($line, '=') !== false) {
-                                    list($key, $value) = explode('=', $line, 2);
-                                    $key = trim($key);
-                                    $value = trim($value); // Trim the value to remove leading and trailing spaces
+                // Display log
+                if (!empty($line) && strpos($line, '=') !== false) {
+                    list($key, $value) = explode('=', $line, 2);
+                    $key = trim($key);
+                    $value = trim($value); // Trim the value to remove leading and trailing spaces
 
-                                    $envVariables[$key] = $value;
-                                    $envVariables[$key] = str_replace('"', '', $value);
-
-                                    if ($key == "DB_CONNECTION" || $key == "DB_HOST" || $key == "DB_PORT" || $key == "DB_DATABASE" || $key == "DB_USERNAME" || $key == "DB_PASSWORD") {
-                                        echo "$key = $value\n";
-                                    }
-                                }
-                            }
-                            ?>
+                    $envVariables[$key] = $value;
+                    $envVariables[$key] = str_replace('"', '', $value);
+                    
+                    if ($key == "DB_CONNECTION" || $key == "DB_HOST" || $key == "DB_PORT" || $key == "DB_DATABASE" || $key == "DB_USERNAME" || $key == "DB_PASSWORD") {
+                        if ($key == "DB_CONNECTION"){
+                            $value = trim($value);                         
+                        }
+                        echo "$key = $value\n";
+                    }
+                }
+            }
+            ?>
         </pre>
     </div>
 
     <div class="2nd-log-container">
         <!-- <h5>Logs: <br></h5> -->
-        <table id="foreign-keys-table" class="table table-striped table-responsive">
+        <table id="foreign-keys-table" class="table table-striped table-responsive table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -191,7 +241,7 @@ $favicon = '&#8801;';
                     $attributes = [];
                     $result = $conn->query("SHOW COLUMNS FROM `$table`");
                     while ($row = $result->fetch_assoc()) {
-                        $attributes[] = $row['Field'];
+                        $attributes[] = $row['Field'] . ' (' . $row['Type'] . ')';
                     }
                     return $attributes;
                 }
@@ -235,10 +285,10 @@ $favicon = '&#8801;';
                         echo '<tr>';
                         echo '<td class="number">' . $count . '</td>';
                         echo '<td>' . $table . '</td>';
-                        echo '<td>' . implode(", ", $tableAttributes) . '</td>';
+                        echo '<td>' . implode("<br>", $tableAttributes) . '</td>';
                         echo '<td>' . $columnName . '</td>';
                         echo '<td>' . $referencedTable . '</td>';
-                        echo '<td>' . implode(", ", $referencedTableAttributes) . '</td>';
+                        echo '<td>' . implode("<br>", $referencedTableAttributes) . '</td>';
                         echo '</tr>';
 
                         $count++;
