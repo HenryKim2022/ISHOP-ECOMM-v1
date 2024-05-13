@@ -18,10 +18,14 @@
         </div>
 
         <div class="tab-pane fade px-4 py-5" id="vedio">
-           
-            <?php echo $product->vedio_link; ?>
+            <?php if($product->vedio_link): ?>
+                <?php echo $product->vedio_link; ?>
 
+            <?php else: ?>
+                <div class="text-dark text-center border py-2"><?php echo e(localize('Not Available')); ?>
 
+                </div>
+            <?php endif; ?>
           
         </div>
 
