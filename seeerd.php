@@ -120,6 +120,12 @@ $favicon = '&#8801;';
         .pagination li a:hover {
             background-color: #ccc;
         }
+
+        .container{
+            margin-left: 2rem;
+            margin-right: 2rem;
+        }
+        
     </style>
 
 
@@ -169,8 +175,8 @@ $favicon = '&#8801;';
 </head>
 
 <body>
-    <h1><?= $appDescb ?></h1>
-    <div class="first-log-container">
+    <h1 class="container"><?= $appDescb ?></h1>
+        <div class="first-log-container container">
         <pre class="log-1"><?php
                             // Read the .env file and parse it into an array
                             $envFile = __DIR__ . '/.env';
@@ -210,7 +216,7 @@ $favicon = '&#8801;';
         </pre>
     </div>
 
-    <div class="third-log-container mr-5 ml-5">
+    <div class="third-log-container container">
         <!-- JointJS dependencies -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.0/backbone-min.js"></script>
