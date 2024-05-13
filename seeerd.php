@@ -210,7 +210,7 @@ $favicon = '&#8801;';
         </pre>
     </div>
 
-    <div class="third-log-container">
+    <div class="third-log-container mr-5 ml-5">
         <!-- JointJS dependencies -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.0/backbone-min.js"></script>
