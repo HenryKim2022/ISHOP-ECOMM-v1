@@ -1,6 +1,6 @@
 <?php
 $appTitle = "";
-$appDescb = "DB ERD-Generator by Henry.K";
+$appDescb = "DB ERD-Generator For ISHOP";
 $favicon = '&#8801;';
 ?>
 
