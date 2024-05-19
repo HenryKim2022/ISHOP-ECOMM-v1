@@ -61,7 +61,11 @@
                                 <div class="mb-4">
                                     <label for="name"
                                         class="form-label">{{ localize('Standard Delivery Charge') }}</label>
-                                    <input type="number" step="0.001" name="standard_delivery_charge"
+                                    {{-- <input type="number" step="0.001" name="standard_delivery_charge"
+                                        id="standard_delivery_charge"
+                                        placeholder="{{ localize('Standard delivery charge') }}" class="form-control"
+                                        min="0" required> --}}
+                                    <input type="number" step="0.0001" name="standard_delivery_charge"
                                         id="standard_delivery_charge"
                                         placeholder="{{ localize('Standard delivery charge') }}" class="form-control"
                                         min="0" required>

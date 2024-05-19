@@ -71,7 +71,7 @@ class LogisticZonesController extends Controller
         $logisticZone = new LogisticZone;
         $logisticZone->name = $request->name;
         $logisticZone->logistic_id = $request->logistic_id;
-        $logisticZone->standard_delivery_charge = $request->standard_delivery_charge;
+        $logisticZone->standard_delivery_charge = priceToUsd($request->standard_delivery_charge);
         $logisticZone->standard_delivery_time = $request->standard_delivery_time;
         $logisticZone->save();
 
@@ -104,7 +104,7 @@ class LogisticZonesController extends Controller
         $logisticZone = LogisticZone::findOrFail($request->id);
         $logisticZone->name = $request->name;
 
-        $logisticZone->standard_delivery_charge = $request->standard_delivery_charge;
+        $logisticZone->standard_delivery_charge = priceToUsd($request->standard_delivery_charge);
         if ($request->express_delivery_charge) {
             $logisticZone->express_delivery_charge = $request->express_delivery_charge;
         }

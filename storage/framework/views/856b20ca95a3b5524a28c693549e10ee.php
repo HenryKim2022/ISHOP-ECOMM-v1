@@ -9,9 +9,9 @@
 ?>
 
 <?php if($localLang->is_rtl == 1): ?>
-    <html dir="rtl" lang="<?php echo e($locale); ?>" data-bs-theme="light">
+    <html dir="rtl" lang="<?php echo e($locale); ?>" data-bs-theme="dark">
 <?php else: ?>
-    <html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>" data-bs-theme="light">
+    <html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>" data-bs-theme="dark">
 <?php endif; ?>
 
 

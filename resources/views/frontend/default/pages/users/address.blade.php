@@ -28,7 +28,7 @@
                                 <div class="col-md-6">
                                     <div
                                         class="tt-address-content border p-3 rounded address-book-content pe-md-4 position-relative">
-                                        <div class="address tt-address-info position-relative">
+                                        <div class="address tt-address-info pt-10 position-relative">
                                             <!-- address -->
                                             @include('frontend.default.inc.address', [
                                                 'address' => $address,

@@ -71,10 +71,24 @@
                                 <div class="mb-4">
                                     <label for="name"
                                         class="form-label">{{ localize('Standard Delivery Charge') }}</label>
-                                    <input type="number" step="0.001" name="standard_delivery_charge"
+                                    {{-- <input type="number" step="0.001" name="standard_delivery_charge"
                                         id="standard_delivery_charge"
                                         placeholder="{{ localize('Standard delivery charge') }}" class="form-control"
-                                        min="0" required value="{{ $logisticZone->standard_delivery_charge }}">
+                                        min="0" required value="{{ $logisticZone->standard_delivery_charge }}"> --}}
+
+                                    {{-- // CUST ADDED: convert amount equal to local currency --}}
+                                    @php    
+                                        $charge = $logisticZone->standard_delivery_charge; 
+                                        // CUST ADDED: convert amount equal to local currency
+                                        if (Session::has('currency_code') && Session::has('local_currency_rate')) {
+                                            $charge = floatval($charge) / (floatval(env('DEFAULT_CURRENCY_RATE')) || 1);
+                                            $charge = floatval($charge) * floatval(Session::get('local_currency_rate'));
+                                        }
+                                    @endphp
+                                    <input type="number" step="0.0001" name="standard_delivery_charge"
+                                        id="standard_delivery_charge"
+                                        placeholder="{{ localize('Standard delivery charge') }}" class="form-control"
+                                        min="0" required value="{{ $charge }}">
                                 </div>
 
                                 <div class="mb-4">

@@ -90,7 +90,9 @@
                                                             <input type="checkbox" class="form-check-input"
                                                                 onchange="updateStatus(this, 'is_active')"
                                                                 @if ($logistic->is_active) checked @endif
-                                                                value="{{ $logistic->id }}">
+                                                                value="{{ $logistic->id }}"
+                                                                data-is-active="{{ $logistic->is_active }}"
+                                                            >
                                                         </div>
                                                     @endcan
                                                 </td>
@@ -100,10 +102,34 @@
                                                             <input type="checkbox" class="form-check-input"
                                                                 onchange="updateStatus(this, 'is_published')"
                                                                 @if ($logistic->is_published) checked @endif
-                                                                value="{{ $logistic->id }}">
+                                                                value="{{ $logistic->id }}"
+                                                                data-is-active="{{ $logistic->is_published }}"
+                                                            >
                                                         </div>
                                                     @endcan
                                                 </td>
+
+
+                                                {{-- <td>
+                                                    @can('active_logistics')
+                                                        <div class="form-check form-switch">
+                                                            <input type="checkbox" class="form-check-input"
+                                                                onchange="updateStatus(this, 'is_active')"
+                                                                @if ($logistic->is_active) checked @endif
+                                                                value="{{ $logistic->id }}">
+                                                        </div>
+                                                    @endcan
+                                                </td> --}}
+                                                {{-- <td>
+                                                    @can('publish_logistics')
+                                                        <div class="form-check form-switch">
+                                                            <input type="checkbox" class="form-check-input"
+                                                                onchange="updateStatus(this, 'is_published')"
+                                                                @if ($logistic->is_published) checked @endif
+                                                                value="{{ $logistic->id }}">
+                                                        </div>
+                                                    @endcan
+                                                </td> --}}
 
                                                 <td class="text-end">
                                                     <div class="dropdown tt-tb-dropdown">
@@ -225,6 +251,36 @@
     </section>
 @endsection
 
+
+
+@section('scripts')
+<script>
+    "use strict";
+
+    function updateStatus(el, type) {
+        var status = el.checked ? 1 : 0;
+        var initialStatus = el.getAttribute('data-is-active');
+
+        $.post('{{ route('admin.logistics.updateStatus') }}', {
+            _token: '{{ csrf_token() }}',
+            id: el.value,
+            type: type,
+            is_active: status, // Include the is_active value in the request payload
+            is_published: status, // Include the is_published value in the request payload
+            initial_status: initialStatus
+        }, function(data) {
+            if (data == 1) {
+                notifyMe('success', '{{ localize('Status updated successfully') }}');
+            } else {
+                notifyMe('danger', '{{ localize('Something went wrong') }}');
+            }
+        });
+    }
+</script>
+@endsection
+
+
+{{-- 
 @section('scripts')
     <script>
         "use strict";
@@ -250,4 +306,4 @@
                 });
         }
     </script>
-@endsection
+@endsection --}}

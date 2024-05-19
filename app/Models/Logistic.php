@@ -14,4 +14,5 @@ class Logistic extends Model
     {
         return $this->hasMany(LogisticZoneCity::class);
     }
+    
 }

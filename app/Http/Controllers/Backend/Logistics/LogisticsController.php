@@ -75,25 +75,45 @@ class LogisticsController extends Controller
 
         $logistic->save();
         flash(localize('Logistic has been updated successfully'))->success();
-        return back();
+        // return back();
+        return redirect()->route('admin.logistics.index');
     }
+
 
     # update status 
     public function updateStatus(Request $request)
     {
-        $blog = Logistic::findOrFail($request->id);
-        if($request->type == 'is_active'){
-            $blog->is_active = $request->is_active;
+        $logistic = Logistic::findOrFail($request->id);
+        if ($request->type == 'is_active') {
+            $logistic->is_active = $request->is_active;
         }
-        if($request->type == 'is_published'){
-            $blog->is_published = $request->is_published;
+        if ($request->type == 'is_published') {
+            $logistic->is_published = $request->is_published;
         }
-        if ($blog->save()) {
+        if ($logistic->save()) {
             return 1;
         }
         return 0;
     }
 
+
+    // # update status 
+    // public function updateStatus(Request $request)
+    // {
+    //     $blog = Logistic::findOrFail($request->id);
+    //     if($request->type == 'is_active'){
+    //         $blog->is_active = $request->is_active;
+    //     }
+    //     if($request->type == 'is_published'){
+    //         $blog->is_published = $request->is_published;
+    //     }
+    //     if ($blog->save()) {
+    //         return 1;
+    //     }
+    //     return 0;
+    // }
+
+    
     # delete Logistic
     public function delete($id)
     {
@@ -102,6 +122,7 @@ class LogisticsController extends Controller
         LogisticZoneCity::where('logistic_id', $logistic->id)->delete();
         $logistic->delete();
         flash(localize('Logistic has been deleted successfully'))->success();
-        return back();
+        // return back();
+        return redirect()->route('admin.logistics.index');
     }
 }
